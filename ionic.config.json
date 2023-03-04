@@ -1,0 +1,7 @@
+{
+  "name": "Nit",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

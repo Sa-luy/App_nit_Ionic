@@ -1,0 +1,37 @@
+<img class="rp-landing_image" src="./././assets/imgs/nit_bg1.png" alt="">
+
+<ion-content padding>
+  <img class="nit_main_img" src="./././assets/imgs/nit_main_img.png" alt="">
+  
+  <div class="nit_button_section">
+    <a  class="nit_button" (click)="this.openSeting()">test modal</a>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="1" class="slider_arrow">
+          <span class="slider-nav arrow-prev" (click)="slidePrev(sliderOne,slideWithNav)">
+            <div class="prev-icon-custom custon-nav" [class.disabled]="sliderOne.isBeginningSlide"></div>
+          </span>
+        </ion-col>
+        <ion-col size="10">
+  
+          <ion-slides pager="false"   #slideWithNav (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">
+            <ion-slide *ngFor="let s of sliderOne.slidesItems">
+              <img src="./././assets/games/{{s.id}}.jpeg">
+            </ion-slide>
+            
+          </ion-slides>
+  
+        </ion-col>
+        <ion-col size="1" class="slider_arrow">
+          <span class="slider-nav arrow-next" (click)="slideNext(sliderOne,slideWithNav)">
+            <div class="next-icon-custom custon-nav" [class.disabled]="sliderOne.isEndSlide"></div>
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+ 
+  
+  
+ 
+</ion-content>

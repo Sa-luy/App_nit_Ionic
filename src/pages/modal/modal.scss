@@ -1,0 +1,180 @@
+page-modal {
+
+    //background-color: black;
+    border-radius: 8px;
+    overflow: hidden;
+    
+    ion-header {
+        
+        background-color: #a7a9ac;
+        left: 16px;
+        position: absolute;
+        right: 16px;
+        top: 37px;
+        width: inherit !important;
+    }
+    ion-header > ion-navbar{
+      min-height: 48px !important;
+      padding: 0 !important;
+    }
+    ion-header > ion-navbar .toolbar-background{
+        border-width: 0 !important;
+        background-color: #a7a9ac ;
+    }
+    .rp-modal_wrapper ion-title{
+      padding-right: 15px !important;
+    }
+    }
+    ion-modal.my-popup {
+        @media (min-height: 500px) {
+          ion-backdrop {
+            visibility: visible;
+          }
+        }
+      div.toolbar-background{
+        border-top-left-radius:8px;
+      }
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: $z-index-overlay;
+      
+        display: flex;
+      
+        align-items: center;
+        justify-content: center;
+      
+        contain: strict;
+        .modal-wrapper {
+          &,
+          .ion-page,
+          .ion-page .content,
+          .ion-page .content .scroll-content {
+            contain: content;
+            position: relative;
+            top: auto;
+            left: auto;
+          }
+      
+          z-index: $z-index-overlay-wrapper;
+          display: flex;
+          overflow: hidden;
+      
+          flex-direction: column;
+      
+          min-width: $alert-min-width;
+          //max-height: $alert-max-height;
+          max-height: 100%;
+      
+          opacity: 0;
+      
+          height: auto;
+          max-width: 344px;
+          border-radius: $alert-md-border-radius;
+          background-color: $alert-md-background-color;
+          box-shadow: inherit;
+          width: 100%;
+          margin-top: -50px;
+          .ion-page .content {
+            background-color: color($colors, light);
+            overflow: auto;
+          }
+    
+         
+          border-width: 0;
+         
+        }
+        // ion-backdrop {
+        //   opacity: 0.8 !important;
+        // }
+        .rp-pop_close{
+          background-image: url(../assets/imgs/ok.png);
+          background-size: 60px 60px;
+          background-repeat: no-repeat;
+          background-position: center;
+          width: 60px;
+          height: 60px;
+          margin-top: -55px;
+          z-index: 10000;
+        }
+        .rp-modal_wrapper{
+          padding: 16px;
+          padding-bottom: 360px;
+          padding-top: 39px;
+          background-color: transparent;
+          //display: inline-block;
+        }
+        .rp-modal_wrapper .rp-close-pop{
+          margin: 0 auto;
+          z-index: 99;
+          text-align: center;
+        }
+        .rp-modal_wrapper .rp-close-pop button{
+        background-color: transparent;
+        box-shadow: inherit !important;
+        }
+        .rp-modal_wrapper .rp-close-pop button:hover{
+          background-color: transparent;
+        }
+        .rp-modal_wrapper ion-title{
+          padding-left: 20px;
+        }
+        
+        .rp-modal_wrapper ion-title > div{
+          text-align: left;
+          color: white;
+          font-family: "RivalSans";
+          font-size: 17px; 
+        }
+        .rp-modal_wrapper .rp-pop_row_back {
+          padding: 0;
+          min-height: 20px;
+        }
+        .rp-modal_wrapper .rp-pop_row_back ion-label{
+          margin: 0;
+        }
+       
+        
+        .modal-wrapper, page-modal {
+          background-color: transparent;
+        }
+        .modal-wrapper ion-header{
+          border-top-left-radius: 8px;
+          border-top-right-radius: 8px;
+          overflow: hidden;
+        }
+        .modal-wrapper ion-content{
+          border-radius: 8px !important;
+          overflow: hidden;
+        }
+        .modal-wrapper ion-content .scroll-content{
+         // border-radius: 8px !important;
+          overflow: hidden;
+          border-bottom-left-radius: 8px;
+          border-bottom-right-radius: 8px;
+          border-radius: 8px;
+        } 
+       
+    .rp-pop_btn_OK_row{
+      width: 100%;
+      padding: 0;
+      margin: 0;
+    }
+    .rp-pop_btn_OK {
+      width: 100%;
+      height: 48px;
+      color: #58595b;
+      background-color: #a7a9ac;
+      font-family: "RivalSans";
+      font-size: 17px; 
+    }
+    .rp-last {
+      margin-bottom: 15px;
+    }
+    .rp-close-pop button.activated{
+        transform: scale(.94);
+    }
+  
+      }

@@ -1,0 +1,29 @@
+<!-- Generated template for the SettingComponent component -->
+<img class="rp-bg_image" src="./././assets/imgs/setting-box.png" alt="">
+<div class="nit_setting_title"><span>SETTINGS</span></div>
+<div class="nit_setting">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="rp-as-range">
+          <div class="rp-as-text"><img class="rp-bg_image" src="./././assets/imgs/icon-bgm.png" alt=""></div>
+      </ion-col>
+      <ion-col >
+        <ion-item>
+            <ion-range min="0" max="100" [(ngModel)]="volume_music" (ionBlur)="updateMusicVolume()" color="secondary">
+            </ion-range>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col class="rp-as-range">
+            <div class="rp-as-text"><img class="rp-bg_image" src="./././assets/imgs/icon-sfx.png" alt=""></div>
+        </ion-col>
+        <ion-col >
+          <ion-item>
+              <ion-range min="0" max="100" [(ngModel)]="volume_sound" (ionBlur)="updateSoundVolume()" color="secondary">
+              </ion-range>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+  </ion-grid>
+</div>
