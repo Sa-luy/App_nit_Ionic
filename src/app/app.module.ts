@@ -1,4 +1,5 @@
 import { SettingComponent } from './../components/setting/setting';
+import { LoginComponent } from '../components/login/login';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, Injector, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -22,6 +23,7 @@ import { Slides } from 'ionic-angular';
 
     HomePage,
     SettingComponent,
+    LoginComponent,
     ModalPage
   ],
   imports: [
@@ -38,6 +40,7 @@ import { Slides } from 'ionic-angular';
     MyApp,
     HomePage,
     SettingComponent,
+    LoginComponent,
     ModalPage,
   ],
   providers: [

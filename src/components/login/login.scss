@@ -1,0 +1,68 @@
+login {
+
+  display: block;
+  width: 100%;
+  height: 333px;
+  position: relative;
+  img.rp-bg_image{
+      position: absolute;
+      width: 312px;
+
+      background: transparent;
+      z-index: 0;
+      pointer-events: none;
+  }
+  .nit_setting{
+      width: 279px;
+      height: 333px;
+      padding-top: 169px;
+      margin-left: 20px;
+  }
+  .rp-as-range{
+      width: 45px;
+      // max-width: 80px;
+      display: flex;
+    width: 45px;
+    align-items: center;
+  }
+  .rp-as-range .rp-as-text ion-item {
+    padding-left: 0px;
+
+    input {
+      border-bottom: 1px solid;
+    }
+    ion-label {
+      font-weight: bold;
+    }
+  }
+  .nit_setting ion-item{
+background-color: transparent;
+margin-top: -7px;
+// padding-left: 8px
+  }
+
+  .nit_setting ion-item.item-block div.item-inner{
+      border: 0;
+      padding-right: 5px;
+  }
+  .nit_setting ion-row{
+      height: 42px;
+  }
+  .nit_setting ion-row ion-col{
+      height: 50px;
+  }
+  .nit_setting .range-ios .range-knob{
+      width: 22px;
+      height: 22px;
+  }
+  .nit_setting_title{
+      position: absolute;
+  right: 70px;
+  top: 108px;
+  font-size: 26px;
+  color: white;
+  font-family: sans-serif;
+  font-weight: bolder;
+  text-shadow: -1px 2px #ff7110;
+  }
+}

@@ -17,7 +17,11 @@ import * as $ from "jquery";
 })
 export class ModalPage {
 
-  constructor( private viewContainerRef: ViewContainerRef,public navCtrl: NavController, public navParams: NavParams, public renderer: Renderer, public view: ViewController, public resolver: ComponentFactoryResolver, public injecter: Injector, public appRef: ApplicationRef, public events: Events, public alertCtrl: AlertController) {
+  constructor( private viewContainerRef: ViewContainerRef,
+    public navCtrl: NavController,
+     public navParams: NavParams, public renderer: Renderer,
+      public view: ViewController, public resolver: ComponentFactoryResolver,
+       public injecter: Injector, public appRef: ApplicationRef, public events: Events, public alertCtrl: AlertController) {
     this.renderer.setElementClass(view.pageRef().nativeElement, 'my-popup', true);
     this.dataPop = this.navParams.get('data');
   }
@@ -35,7 +39,7 @@ export class ModalPage {
     setTimeout(() => {
       this.navCtrl.pop();
     }, 300);
-    
+
   }
   ngOnInit(){
     $(".rp-pop_close").css("pointer-events", "none");

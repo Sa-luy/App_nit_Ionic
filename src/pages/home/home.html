@@ -2,9 +2,11 @@
 
 <ion-content padding>
   <img class="nit_main_img" src="./././assets/imgs/nit_main_img.png" alt="">
-  
+  <button class="btn-login" (click)="openModalLogin()">Login</button>
+
   <div class="nit_button_section">
     <a  class="nit_button" (click)="this.openSeting()">test modal</a>
+    <button class="btn_add_game" *ngIf="this.myGlobal.isLogin"><ion-icon name="add-circle-outline"></ion-icon></button>
     <ion-grid>
       <ion-row>
         <ion-col size="1" class="slider_arrow">
@@ -13,14 +15,14 @@
           </span>
         </ion-col>
         <ion-col size="10">
-  
+
           <ion-slides pager="false"   #slideWithNav (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">
             <ion-slide *ngFor="let s of sliderOne.slidesItems">
-              <img src="./././assets/games/{{s.id}}.jpeg">
+              <a target="_blank" href="{{ s.path }}"><img src="./././assets/games/{{s.id}}.jpeg"></a>
             </ion-slide>
-            
+
           </ion-slides>
-  
+
         </ion-col>
         <ion-col size="1" class="slider_arrow">
           <span class="slider-nav arrow-next" (click)="slideNext(sliderOne,slideWithNav)">
@@ -30,8 +32,8 @@
       </ion-row>
     </ion-grid>
   </div>
- 
-  
-  
- 
+
+
+
+
 </ion-content>

@@ -4,7 +4,7 @@ page-home {
         display: flex;
         justify-content: center;
      }
-  
+
   img.rp-landing_image{
         width: 100%;
         height: 100%;
@@ -15,15 +15,28 @@ page-home {
         position: relative;
         pointer-events: none;
         bottom: 0;
-       
+
+    }
+    .btn-login {
+      color: white;
+      position: absolute;
+      width: 13rem;
+      height: 6rem;
+      top: 151px;
+      background-color: #f9a737;
+      font-size: 2em;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      border-radius: 10px;
+      border: 1px solid #2ea7db;
     }
     .nit_main_img{
         position: relative;
     display: block;
     margin: auto;
     width: 400px;
-    
-   
+
+
     }
     .nit_button_section{
         text-align: center;
@@ -31,17 +44,28 @@ page-home {
     position: absolute;
     top: 50%;
     margin-top:50px;
+
+
+    .btn_add_game {
+      background: transparent;
+      color: red;
+      padding: 0;
+
+      ion-icon {
+        font-size: 30px;
+      }
+    }
     }
     .nit_button_section .nit_button{
         margin-top:40px;
     }
 
-    // Slider Style START 
+    // Slider Style START
 .custon-nav{
     height: 48px;
     width: 20px;
     cursor: pointer;
-  
+
     vertical-align: middle;
     position: absolute;
     top: 50%;
@@ -66,7 +90,7 @@ page-home {
         height: 100%;
     }
   }
-  
+
   .slide-text{
     position: absolute;
     color: white;
@@ -85,5 +109,5 @@ page-home {
     }
   }
   // Slider Style STOP
-  
+
 }
