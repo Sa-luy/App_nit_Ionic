@@ -1,7 +1,8 @@
 import { AppInjector } from './../../app/app-injecter';
 import { Component , ViewChild } from '@angular/core';
-import { NavController, Slides } from 'ionic-angular';
+import { NavController, NavParams, Slides } from 'ionic-angular';
 import { GlobalVars } from '../../app/global';
+import { UploadPage } from '../upload/upload';
 
 
 @Component({
@@ -22,8 +23,8 @@ export class HomePage {
     };
 
 
-  constructor(public navCtrl: NavController) {
-
+  constructor(public navCtrl: NavController,  public navParams: NavParams) {
+    let uploadPage = new UploadPage(this.navCtrl, this.navParams);
 
 
     this.sliderOne =
@@ -106,6 +107,10 @@ export class HomePage {
   openModalLogin(){
     // console.log('Open modal login');
     this.myGlobal.openModalByComponentName('LoginComponent')
+
+  }
+  openUpload() {
+    this.navCtrl.push(UploadPage)
 
   }
 

@@ -6,7 +6,7 @@
 
   <div class="nit_button_section">
     <a  class="nit_button" (click)="this.openSeting()">test modal</a>
-    <button class="btn_add_game" *ngIf="this.myGlobal.isLogin"><ion-icon name="add-circle-outline"></ion-icon></button>
+    <button class="btn_add_game" *ngIf="this.myGlobal.isLogin" (click)="this.openUpload()"><ion-icon name="add-circle-outline"></ion-icon></button>
     <ion-grid>
       <ion-row>
         <ion-col size="1" class="slider_arrow">

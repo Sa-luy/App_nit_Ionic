@@ -5,7 +5,9 @@ import { LoginComponent } from './login/login';
 	declarations: [SettingComponent,
     LoginComponent],
 	imports: [],
-	exports: [SettingComponent,
-    LoginComponent]
+	exports: [
+    SettingComponent,
+    LoginComponent
+  ]
 })
 export class ComponentsModule {}

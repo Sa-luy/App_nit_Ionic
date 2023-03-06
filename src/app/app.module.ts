@@ -15,12 +15,13 @@ import { NativeAudio } from '@awesome-cordova-plugins/native-audio/ngx';
 import { SmartAudio } from '../providers/smart-audio/smart-audio';
 import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
 import { Slides } from 'ionic-angular';
+import { UploadPage } from '../pages/upload/upload';
 
 
 @NgModule({
   declarations: [
     MyApp,
-
+    UploadPage,
     HomePage,
     SettingComponent,
     LoginComponent,
@@ -41,6 +42,7 @@ import { Slides } from 'ionic-angular';
     HomePage,
     SettingComponent,
     LoginComponent,
+    UploadPage,
     ModalPage,
   ],
   providers: [
