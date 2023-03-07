@@ -33,7 +33,6 @@ export class LoginComponent {
       name: this.name,
       password: this.password
     };
-    console.log(this.myGlobal.isLogin);
     this.login(data_user)
 
 

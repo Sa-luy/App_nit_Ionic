@@ -11,16 +11,46 @@
 </ion-header>
 
 <ion-content padding>
-  <form (ngSubmit)="logForm()">
+  <form (ngSubmit)="handleSubmit()"
+   method="post"
+  enctype="multipart/form-data"
+  >
     <ion-item>
       <ion-label>Link</ion-label>
-      <ion-input type="text"  name="title" placeholder="link game"></ion-input>
+      <ion-input type="text"  name="link"  [(ngModel)]="link" placeholder="link game"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Image</ion-label>
-      <ion-input type="file"  name="image"></ion-input>
+      <ion-input type="file"  name="image" (change)="onFileSelected($event)" ></ion-input>
       <!-- <ion-textarea [(ngModel)]="" name="description"></ion-textarea> -->
     </ion-item>
-    <button ion-button type="submit" block>Add Todo</button>
+    <div class="btn-submit">
+
+      <button ion-button type="submit" block  >Add</button>
+    </div>
   </form>
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <img src="./././assets/games/1.jpeg" alt="">
+      </div>
+      <div class="swiper-slide">
+        <img src="./././assets/games/2.jpeg" alt="">
+      </div>
+
+
+
+    </div>
+    <div class="swiper-button-prev" (click)="handlePrev()"></div>
+    <div class="swiper-button-next" (click)="handleNext()"></div>
+  </div>
 </ion-content>
+<script>
+  var swiper = new Swiper('.swiper-container', {
+    // Cấu hình các tùy chọn của Swiper.
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+</script>
