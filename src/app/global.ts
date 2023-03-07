@@ -93,17 +93,18 @@ export class GlobalVars {
             }
 
         );
-}
-set_volume_click() {
-  this.nativeStorage.setItem('nit_volume_click', this.volume_click)
-      .then(
-          () => console.log('set nit_volume_click'),
-          error => console.error('Error storing nit_volume_click', error)
-      );
-}
- setLogin (data:boolean): boolean {
-return this.isLogin=data;
-}
+      }
+  set_volume_click() {
+    this.nativeStorage.setItem('nit_volume_click', this.volume_click)
+        .then(
+            () => console.log('set nit_volume_click'),
+            error => console.error('Error storing nit_volume_click', error)
+        );
+    }
+  setLogin (data:boolean): boolean {
+        return this.isLogin=data;
+      }
+
 
 
 

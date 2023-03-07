@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { Swiper } from 'swiper';
 
 /**
@@ -15,21 +15,42 @@ import { Swiper } from 'swiper';
   templateUrl: 'upload.html',
 })
 export class UploadPage {
+  @ViewChild('slideWithNav') slideWithNav: Slides;
   link:string ;
   banner: string;
   selectedFile:File=null;
+  sliderOne: any;
+  userBanner:any = [
+    {link:"https://volamm.zing.vn/index.html",
+    banner:"./././assets/games/1.jpeg"
+  },
+    {link:"#1",
+    banner:"./././assets/games/2.jpeg"
+  },
+  ];
 
-  userBanner = Array<{ link: string, banner: string }>();
 
   mySwiper: Swiper=new Swiper('.swiper-container', {});
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
 
-       ) {}
+       ) { this.sliderOne =
+        {
+          isBeginningSlide: true,
+          isEndSlide: false,
+          slidesItems: this.userBanner
+        };
+      }
 
   ionViewDidLoad() {
+    this.sliderOne = {
+      isBeginningSlide: true,
+      isEndSlide: false,
+      slidesItems: this.userBanner
+    };
+    console.log(this.userBanner);
     console.log('open UploadPage');
-    this.mySwiper = new Swiper('.swiper-container', {});
+
   }
   handleSubmit(){
     if (!this.selectedFile) {
@@ -44,31 +65,68 @@ export class UploadPage {
       let data = {
         link:this.link,
         banner:this.banner
+
       }
+
+
       this.addBanner(data)
     };
   }
   onFileSelected(event) {
     this.selectedFile = <File>event.target.files[0];
   }
-  addBanner(data:object){
-    console.log(data);
+  addBanner(data:any){
+    this.userBanner =[...this.userBanner,data];
+    console.log(this.userBanner);
+    this.updateSlides();
+
 
   }
   //Move to Next slide
-  handleNext() {
-  //  let mySwiper= this.mySwiper[0];
-  //  console.log(this.mySwiper);
+  slideNext(object, slideView: Slides) {
 
+    slideView.slideNext(500);
+  }
 
-     this.mySwiper.slideTo(this.mySwiper.activeIndex + 1);
-   ;
-}
+  //Move to previous slide
+  slidePrev(object, slideView: Slides) {
+    slideView.slidePrev(500);
+  }
 
-//Move to previous slide
-  handlePrev() {
-  this.mySwiper.slidePrev(500);
-}
+  //Method called when slide is changed by drag or navigation
+  SlideDidChange(object, slideView) {
+    this.checkIfNavDisabled(object, slideView);
+  }
+
+  //Call methods to check if slide is first or last to enable disbale navigation
+  checkIfNavDisabled(object, slideView) {
+    this.checkisBeginning(object, slideView);
+    this.checkisEnd(object, slideView);
+  }
+
+  checkisBeginning(object, slideView: Slides) {
+
+    if (slideView.isBeginning()){
+      object.isBeginningSlide = true;
+    }else{
+      object.isBeginningSlide = false;
+    }
+
+  }
+  checkisEnd(object, slideView: Slides) {
+    // slideView.isEnd().then((istrue) => {
+    //   object.isEndSlide = istrue;
+    // });
+    if (slideView.isEnd()){
+      object.isEndSlide = true;
+    }else{
+      object.isEndSlide = false;
+    }
+  }
+  updateSlides() {
+    this.sliderOne.slidesItems = this.userBanner;
+    this.slideWithNav.update();
+  }
 
 
 
