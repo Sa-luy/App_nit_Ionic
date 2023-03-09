@@ -16,6 +16,7 @@ import { SmartAudio } from '../providers/smart-audio/smart-audio';
 import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
 import { Slides } from 'ionic-angular';
 import { UploadPage } from '../pages/upload/upload';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { UploadPage } from '../pages/upload/upload';
     StatusBar,
     SplashScreen,
     GlobalVars,
+    InAppBrowser,
     NativeAudio,
     SmartAudio,
     NativeStorage,

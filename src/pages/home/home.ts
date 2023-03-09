@@ -1,6 +1,9 @@
 import { AppInjector } from './../../app/app-injecter';
 import { Component , ViewChild } from '@angular/core';
 import { NavController, NavParams, Slides } from 'ionic-angular';
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser';
+
+
 import { GlobalVars } from '../../app/global';
 import { UploadPage } from '../upload/upload';
 
@@ -23,7 +26,11 @@ export class HomePage {
     };
 
 
-  constructor(public navCtrl: NavController,  public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+      public navParams: NavParams,
+      private iab: InAppBrowser
+      ) {
     let uploadPage = new UploadPage(this.navCtrl, this.navParams);
 
 
@@ -113,11 +120,17 @@ export class HomePage {
     this.navCtrl.push(UploadPage)
 
   }
+  //in_app_browser
+  openLink(url: string) {
+    this.iab.create(url, '_blank');
+  }
+  //endin_app_browser
 
   ngAfterViewInit() {
     // this.slideWithNav.Slides = 2000;
     this.slideWithNav.isBeginning
     // this.slides.autoplayDisableOnInteraction = false;
 }
+
 
 }

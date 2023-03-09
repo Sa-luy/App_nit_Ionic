@@ -1,4 +1,4 @@
-import { Component,ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { Swiper } from 'swiper';
 
@@ -33,6 +33,7 @@ export class UploadPage {
   mySwiper: Swiper=new Swiper('.swiper-container', {});
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
+
 
        ) { this.sliderOne =
         {
