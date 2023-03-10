@@ -105,8 +105,10 @@ var ModalPage = /** @class */ (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UploadPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(696);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(31);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -138,41 +140,42 @@ var __spread = (this && this.__spread) || function () {
 };
 
 
+// import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+
 var UploadPage = /** @class */ (function () {
-    function UploadPage(navCtrl, navParams) {
+    function UploadPage(navCtrl, navParams, formBuilder, http) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.formBuilder = formBuilder;
+        this.http = http;
         this.selectedFile = null;
-        this.sliderOne =
-            {
-                isBeginningSlide: true,
-                isEndSlide: false,
-            };
+        this.sliderOne = { isBeginningSlide: true, isEndSlide: false, };
     }
+    UploadPage.prototype.ngOnInit = function () {
+        this.uploadForm = this.formBuilder.group({
+            url_image: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required],
+            link: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* Validators */].required]
+        });
+    };
     UploadPage.prototype.ionViewDidLoad = function () {
         this.homePage = this.navCtrl.getPrevious().instance;
         this.userBanner = this.homePage.sliderOne.slidesItems;
     };
-    UploadPage.prototype.handleSubmit = function () {
-        var _this = this;
-        if (!this.selectedFile) {
-            console.log('No file selected');
-            return;
-        }
-        var reader = new FileReader();
-        reader.readAsDataURL(this.selectedFile);
-        reader.onload = function () {
-            _this.banner = reader.result.toString();
-            localStorage.setItem('image', _this.banner);
-            var data = {
-                link: _this.link,
-                url_image: _this.banner
-            };
-            _this.addBanner(data);
-        };
-    };
     UploadPage.prototype.onFileSelected = function (event) {
         this.selectedFile = event.target.files[0];
+    };
+    UploadPage.prototype.handleSubmit = function () {
+        var url = 'https://nitgame/banner';
+        var formData = new FormData();
+        formData.append('link', this.link);
+        formData.append('url_image', this.selectedFile);
+        console.log(formData);
+        this.http.post(url, formData).subscribe(function (response) {
+            console.log('Banner created successfully');
+        }, function (error) {
+            console.error('Error creating banner', error);
+        });
     };
     UploadPage.prototype.addBanner = function (data) {
         this.userBanner = __spread(this.userBanner, [data]);
@@ -181,17 +184,17 @@ var UploadPage = /** @class */ (function () {
         this.navCtrl.pop();
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('slideWithNav'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Slides */])
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_8" /* ViewChild */])('slideWithNav'),
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* Slides */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* Slides */]) === "function" && _a || Object)
     ], UploadPage.prototype, "slideWithNav", void 0);
     UploadPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-upload',template:/*ion-inline-start:"C:\Ionic\Nit2\Nit\src\pages\upload\upload.html"*/'<!--\n  Generated template for the UploadPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>upload</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <form (ngSubmit)="handleSubmit()"\n   method="post"\n  enctype="multipart/form-data"\n  >\n    <ion-item>\n      <ion-label>Link</ion-label>\n      <ion-input type="text"  name="link"  [(ngModel)]="link" placeholder="link game"></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-label>Image</ion-label>\n      <ion-input type="file"  name="image" (change)="onFileSelected($event)" ></ion-input>\n      <!-- <ion-textarea [(ngModel)]="" name="description"></ion-textarea> -->\n    </ion-item>\n    <div class="btn-submit">\n\n      <button ion-button type="submit" block  >Add</button>\n    </div>\n  </form>\n  <!-- slide -->\n  <div class="main_content">\n    <ion-grid>\n      <ion-row>\n        <ion-col size="1" class="slider_arrow">\n          <span class="slider-nav arrow-prev" (click)="this.homePage.slidePrev(sliderOne,slideWithNav)">\n            <div class="prev-icon-custom custon-nav" [class.disabled]="this.sliderOne.isBeginningSlide"></div>\n          </span>\n        </ion-col>\n        <ion-col size="10">\n\n          <ion-slides pager="false"   #slideWithNav (ionSlideDidChange)="this.homePage.SlideDidChange(sliderOne,slideWithNav)">\n            <ion-slide *ngFor="let s of this.userBanner">\n              <a  href="#" (click)="openLink(s.path)">\n                <img src="{{ s.url_image }}">\n              </a>\n            </ion-slide>\n\n          </ion-slides>\n\n        </ion-col>\n        <ion-col size="1" class="slider_arrow">\n          <span class="slider-nav arrow-next" (click)="this.homePage.slideNext(sliderOne,slideWithNav)">\n            <div class="next-icon-custom custon-nav" [class.disabled]="sliderOne.isEndSlide"></div>\n          </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n  <!-- end slide -->\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Ionic\Nit2\Nit\src\pages\upload\upload.html"*/,
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
+            selector: 'page-upload',template:/*ion-inline-start:"C:\Ionic\Nit2\Nit\src\pages\upload\upload.html"*/'<!--\n  Generated template for the UploadPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>upload</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <form (ngSubmit)="handleSubmit()"\n   method="post"\n   [formGroup]="uploadForm"\n  enctype="multipart/form-data"\n  >\n    <ion-item>\n      <ion-label>Link</ion-label>\n      <ion-input type="text" name="link"   [(ngModel)]="link" placeholder="link game" formControlName="link"></ion-input>\n      <!-- <div *ngIf="loginForm.controls.link.touched && loginForm.controls.link.errors">\n        <p *ngIf="loginForm.controls.link.errors.required">Name is required.</p>\n      </div>-->\n    </ion-item>\n    <ion-item>\n      <ion-label>Image</ion-label>\n      <ion-input type="file"  name="url_image" (change)="onFileSelected($event)" ></ion-input>\n      <!-- <ion-textarea [(ngModel)]="" name="description"></ion-textarea> -->\n    </ion-item>\n    <div class="btn-submit">\n\n      <button ion-button type="submit" block  >Add</button>\n    </div>\n  </form>\n  <!-- slide -->\n  <div class="main_content">\n    <ion-grid>\n      <ion-row>\n        <ion-col size="1" class="slider_arrow">\n          <span class="slider-nav arrow-prev" (click)="this.homePage.slidePrev(sliderOne,slideWithNav)">\n            <div class="prev-icon-custom custon-nav" [class.disabled]="this.sliderOne.isBeginningSlide"></div>\n          </span>\n        </ion-col>\n        <ion-col size="10">\n\n          <ion-slides pager="false"   #slideWithNav (ionSlideDidChange)="this.homePage.SlideDidChange(sliderOne,slideWithNav)">\n            <ion-slide *ngFor="let s of this.userBanner">\n              <a  href="#" (click)="openLink(s.path)">\n                <img src="{{ s.url_image }}">\n              </a>\n            </ion-slide>\n\n          </ion-slides>\n\n        </ion-col>\n        <ion-col size="1" class="slider_arrow">\n          <span class="slider-nav arrow-next" (click)="this.homePage.slideNext(sliderOne,slideWithNav)">\n            <div class="next-icon-custom custon-nav" [class.disabled]="sliderOne.isEndSlide"></div>\n          </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n  <!-- end slide -->\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Ionic\Nit2\Nit\src\pages\upload\upload.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["i" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["i" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["j" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["j" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _e || Object])
     ], UploadPage);
     return UploadPage;
+    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=upload.js.map
@@ -406,6 +409,8 @@ var SmartAudio = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_in_app_browser__ = __webpack_require__(350);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_global__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__upload_upload__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_forms__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_common_http__ = __webpack_require__(696);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -421,11 +426,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var HomePage = /** @class */ (function () {
-    function HomePage(navCtrl, navParams, iab) {
+    function HomePage(navCtrl, navParams, iab, formBuilder, http) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.iab = iab;
+        this.formBuilder = formBuilder;
+        this.http = http;
         this.myGlobal = __WEBPACK_IMPORTED_MODULE_0__app_app_injecter__["a" /* AppInjector */].get(__WEBPACK_IMPORTED_MODULE_4__app_global__["a" /* GlobalVars */]);
         this.sliders = [
             {
@@ -439,7 +448,7 @@ var HomePage = /** @class */ (function () {
             slidesPerView: 1,
             autoplay: true
         };
-        var uploadPage = new __WEBPACK_IMPORTED_MODULE_5__upload_upload__["a" /* UploadPage */](this.navCtrl, this.navParams);
+        var uploadPage = new __WEBPACK_IMPORTED_MODULE_5__upload_upload__["a" /* UploadPage */](this.navCtrl, this.navParams, this.formBuilder, this.http);
         this.sliderOne =
             {
                 isBeginningSlide: true,
@@ -494,8 +503,11 @@ var HomePage = /** @class */ (function () {
         this.myGlobal.openModalByComponentName('LoginComponent');
         console.log('Open modal ');
     };
+    HomePage.prototype.openModalRegister = function () {
+        this.myGlobal.openModalByComponentName('RegisterUserComponent');
+    };
     HomePage.prototype.openUpload = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__upload_upload__["a" /* UploadPage */], { addSlide: this.addSlide.bind(this) });
+        this.myGlobal.openModalByComponentName('UploadPage');
     };
     HomePage.prototype.openLink = function (url) {
         var browser = this.iab.create(url, '_self');
@@ -510,17 +522,16 @@ var HomePage = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_8" /* ViewChild */])('slideWithNav'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* Slides */])
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* Slides */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* Slides */]) === "function" && _a || Object)
     ], HomePage.prototype, "slideWithNav", void 0);
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"C:\Ionic\Nit2\Nit\src\pages\home\home.html"*/'<img class="rp-landing_image" src="./././assets/imgs/nit_bg1.png" alt="">\n\n<ion-content padding>\n  <img class="nit_main_img" src="./././assets/imgs/nit_main_img.png" alt="">\n  <button class="btn-login" (click)="openModalLogin()">Login</button>\n\n  <div class="nit_button_section">\n    <a  class="nit_button" (click)="this.openSeting()">test modal</a>\n    <button ion-button class="btn_add_game" *ngIf="this.myGlobal.isLogin" (click)="this.openUpload()"><ion-icon name="add-circle-outline"></ion-icon></button>\n    <ion-grid>\n      <ion-row>\n        <ion-col size="1" class="slider_arrow">\n          <span class="slider-nav arrow-prev" (click)="slidePrev(sliderOne,slideWithNav)">\n            <div class="prev-icon-custom custon-nav" [class.disabled]="sliderOne.isBeginningSlide"></div>\n          </span>\n        </ion-col>\n        <ion-col size="10">\n\n          <ion-slides pager="false"   #slideWithNav (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">\n            <ion-slide *ngFor="let s of sliderOne.slidesItems">\n              <a  href="#" (click)="this.openLink(s.link)">\n                <img src="{{ s.url_image }}">\n              </a>\n            </ion-slide>\n\n          </ion-slides>\n\n        </ion-col>\n        <ion-col size="1" class="slider_arrow">\n          <span class="slider-nav arrow-next" (click)="slideNext(sliderOne,slideWithNav)">\n            <div class="next-icon-custom custon-nav" [class.disabled]="sliderOne.isEndSlide"></div>\n          </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n\n\n\n\n</ion-content>\n'/*ion-inline-end:"C:\Ionic\Nit2\Nit\src\pages\home\home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"C:\Ionic\Nit2\Nit\src\pages\home\home.html"*/'<img class="rp-landing_image" src="./././assets/imgs/nit_bg1.png" alt="">\n\n<ion-content padding>\n  <img class="nit_main_img" src="./././assets/imgs/nit_main_img.png" alt="">\n  <button class="btn-login" (click)="openModalLogin()">Login</button>\n  <button class="btn-register" (click)="openModalRegister()">Register</button>\n\n  <div class="nit_button_section">\n    <a  class="nit_button" (click)="this.openSeting()">test modal</a>\n    <button ion-button class="btn_add_game" *ngIf="this.myGlobal.isLogin" (click)="this.openUpload()"><ion-icon name="add-circle-outline"></ion-icon></button>\n    <ion-grid>\n      <ion-row>\n        <ion-col size="1" class="slider_arrow">\n          <span class="slider-nav arrow-prev" (click)="slidePrev(sliderOne,slideWithNav)">\n            <div class="prev-icon-custom custon-nav" [class.disabled]="sliderOne.isBeginningSlide"></div>\n          </span>\n        </ion-col>\n        <ion-col size="10">\n\n          <ion-slides pager="false"   #slideWithNav (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">\n            <ion-slide *ngFor="let s of sliderOne.slidesItems">\n              <a  href="#" (click)="this.openLink(s.link)">\n                <img src="{{ s.url_image }}">\n              </a>\n            </ion-slide>\n\n          </ion-slides>\n\n        </ion-col>\n        <ion-col size="1" class="slider_arrow">\n          <span class="slider-nav arrow-next" (click)="slideNext(sliderOne,slideWithNav)">\n            <div class="next-icon-custom custon-nav" [class.disabled]="sliderOne.isEndSlide"></div>\n          </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n\n\n\n\n</ion-content>\n'/*ion-inline-end:"C:\Ionic\Nit2\Nit\src\pages\home\home.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_3__ionic_native_in_app_browser__["a" /* InAppBrowser */]])
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_in_app_browser__["a" /* InAppBrowser */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_in_app_browser__["a" /* InAppBrowser */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__angular_forms__["a" /* FormBuilder */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_7__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__angular_common_http__["a" /* HttpClient */]) === "function" && _f || Object])
     ], HomePage);
     return HomePage;
+    var _a, _b, _c, _d, _e, _f;
 }());
 
 //# sourceMappingURL=home.js.map
@@ -546,23 +557,27 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_setting_setting__ = __webpack_require__(358);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_login_login__ = __webpack_require__(688);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(346);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__ = __webpack_require__(348);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_injecter__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__awesome_cordova_plugins_native_audio_ngx__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_smart_audio_smart_audio__ = __webpack_require__(349);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__awesome_cordova_plugins_native_storage_ngx__ = __webpack_require__(166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__awesome_cordova_plugins_native_audio_ngx__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__awesome_cordova_plugins_native_storage_ngx__ = __webpack_require__(166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_camera__ = __webpack_require__(697);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_in_app_browser__ = __webpack_require__(350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_splash_screen__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_status_bar__ = __webpack_require__(348);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ionic_angular__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_login_login__ = __webpack_require__(688);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_upload_upload__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_in_app_browser__ = __webpack_require__(350);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__app_component__ = __webpack_require__(692);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_modal_modal__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__global__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_home_home__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__providers_smart_audio_smart_audio__ = __webpack_require__(349);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_setting_setting__ = __webpack_require__(358);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__app_injecter__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__angular_common_http__ = __webpack_require__(696);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_register_user_register_user__ = __webpack_require__(695);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_home_home__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_modal_modal__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__app_component__ = __webpack_require__(692);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__global__ = __webpack_require__(43);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -589,23 +604,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
+
+
 var AppModule = /** @class */ (function () {
     function AppModule(injector) {
-        Object(__WEBPACK_IMPORTED_MODULE_7__app_injecter__["b" /* setAppInjector */])(injector);
+        Object(__WEBPACK_IMPORTED_MODULE_14__app_injecter__["b" /* setAppInjector */])(injector);
     }
     AppModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["I" /* NgModule */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_13__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_19__app_component__["a" /* MyApp */],
                 __WEBPACK_IMPORTED_MODULE_11__pages_upload_upload__["a" /* UploadPage */],
-                __WEBPACK_IMPORTED_MODULE_16__pages_home_home__["a" /* HomePage */],
-                __WEBPACK_IMPORTED_MODULE_0__components_setting_setting__["a" /* SettingComponent */],
-                __WEBPACK_IMPORTED_MODULE_1__components_login_login__["a" /* LoginComponent */],
-                __WEBPACK_IMPORTED_MODULE_14__pages_modal_modal__["a" /* ModalPage */]
+                __WEBPACK_IMPORTED_MODULE_17__pages_home_home__["a" /* HomePage */],
+                __WEBPACK_IMPORTED_MODULE_13__components_setting_setting__["a" /* SettingComponent */],
+                __WEBPACK_IMPORTED_MODULE_10__components_login_login__["a" /* LoginComponent */],
+                __WEBPACK_IMPORTED_MODULE_16__components_register_user_register_user__["a" /* RegisterUserComponent */],
+                __WEBPACK_IMPORTED_MODULE_18__pages_modal_modal__["a" /* ModalPage */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__["a" /* BrowserModule */],
-                __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["e" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_13__app_component__["a" /* MyApp */], {
+                __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormsModule */],
+                __WEBPACK_IMPORTED_MODULE_15__angular_common_http__["b" /* HttpClientModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* ReactiveFormsModule */],
+                __WEBPACK_IMPORTED_MODULE_9_ionic_angular__["e" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_19__app_component__["a" /* MyApp */], {
                     mode: 'ios',
                     scrollPadding: false,
                     scrollAssist: false,
@@ -617,28 +640,30 @@ var AppModule = /** @class */ (function () {
                     ]
                 })
             ],
-            bootstrap: [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["c" /* IonicApp */]],
+            bootstrap: [__WEBPACK_IMPORTED_MODULE_9_ionic_angular__["c" /* IonicApp */]],
             entryComponents: [
-                __WEBPACK_IMPORTED_MODULE_16__pages_home_home__["a" /* HomePage */],
-                __WEBPACK_IMPORTED_MODULE_13__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_0__components_setting_setting__["a" /* SettingComponent */],
-                __WEBPACK_IMPORTED_MODULE_1__components_login_login__["a" /* LoginComponent */],
+                __WEBPACK_IMPORTED_MODULE_17__pages_home_home__["a" /* HomePage */],
+                __WEBPACK_IMPORTED_MODULE_19__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_13__components_setting_setting__["a" /* SettingComponent */],
+                __WEBPACK_IMPORTED_MODULE_10__components_login_login__["a" /* LoginComponent */],
+                __WEBPACK_IMPORTED_MODULE_16__components_register_user_register_user__["a" /* RegisterUserComponent */],
                 __WEBPACK_IMPORTED_MODULE_11__pages_upload_upload__["a" /* UploadPage */],
-                __WEBPACK_IMPORTED_MODULE_14__pages_modal_modal__["a" /* ModalPage */],
+                __WEBPACK_IMPORTED_MODULE_18__pages_modal_modal__["a" /* ModalPage */],
             ],
             providers: [
-                __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__["a" /* StatusBar */],
-                __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__["a" /* SplashScreen */],
-                __WEBPACK_IMPORTED_MODULE_15__global__["a" /* GlobalVars */],
-                __WEBPACK_IMPORTED_MODULE_12__ionic_native_in_app_browser__["a" /* InAppBrowser */],
-                __WEBPACK_IMPORTED_MODULE_8__awesome_cordova_plugins_native_audio_ngx__["a" /* NativeAudio */],
-                __WEBPACK_IMPORTED_MODULE_16__pages_home_home__["a" /* HomePage */],
-                __WEBPACK_IMPORTED_MODULE_9__providers_smart_audio_smart_audio__["a" /* SmartAudio */],
-                __WEBPACK_IMPORTED_MODULE_10__awesome_cordova_plugins_native_storage_ngx__["a" /* NativeStorage */],
-                { provide: __WEBPACK_IMPORTED_MODULE_3__angular_core__["u" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["d" /* IonicErrorHandler */] }
+                __WEBPACK_IMPORTED_MODULE_8__ionic_native_status_bar__["a" /* StatusBar */],
+                __WEBPACK_IMPORTED_MODULE_7__ionic_native_splash_screen__["a" /* SplashScreen */],
+                __WEBPACK_IMPORTED_MODULE_5__ionic_native_camera__["a" /* Camera */],
+                __WEBPACK_IMPORTED_MODULE_20__global__["a" /* GlobalVars */],
+                __WEBPACK_IMPORTED_MODULE_6__ionic_native_in_app_browser__["a" /* InAppBrowser */],
+                __WEBPACK_IMPORTED_MODULE_3__awesome_cordova_plugins_native_audio_ngx__["a" /* NativeAudio */],
+                __WEBPACK_IMPORTED_MODULE_17__pages_home_home__["a" /* HomePage */],
+                __WEBPACK_IMPORTED_MODULE_12__providers_smart_audio_smart_audio__["a" /* SmartAudio */],
+                __WEBPACK_IMPORTED_MODULE_4__awesome_cordova_plugins_native_storage_ngx__["a" /* NativeStorage */],
+                { provide: __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_9_ionic_angular__["d" /* IonicErrorHandler */] }
             ]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__angular_core__["C" /* Injector */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injector */]])
     ], AppModule);
     return AppModule;
 }());
@@ -747,7 +772,7 @@ var GlobalVars = /** @class */ (function () {
         this.nativeStorage = nativeStorage;
         this.volume_music = 0.5;
         this.volume_click = 0.5;
-        this.isLogin = false;
+        this.isLogin = true;
     }
     GlobalVars.prototype.openModalByComponentName = function (comName, params, isSecondPop) {
         if (params === void 0) { params = [""]; }
@@ -757,7 +782,7 @@ var GlobalVars = /** @class */ (function () {
             enableBackdropDismiss: false,
             showBackdrop: false,
         };
-        if (comName === 'LoginComponent')
+        if (comName === 'LoginComponent' || comName == 'RegisterUserComponent')
             myModalOption.cssClass = 'modal-login';
         if (comName === 'SettingComponent')
             myModalOption.cssClass = 'modal-setting';
@@ -926,7 +951,7 @@ var LoginComponent = /** @class */ (function () {
     ], LoginComponent.prototype, "isLogin", void 0);
     LoginComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'login',template:/*ion-inline-start:"C:\Ionic\Nit2\Nit\src\components\login\login.html"*/'<!-- Generated template for the LoginComponent component -->\n<img class="rp-bg_image" src="./././assets/imgs/setting-box.png" alt="">\n<div class="nit_setting_title"><span>LOGIN</span></div>\n<div class="nit_setting">\n  <ion-grid>\n    <form>\n    <ion-row>\n        <ion-col class="rp-as-range">\n            <div class="rp-as-text">\n              <ion-item fill="solid">\n                <ion-label position="floating">User Name : </ion-label>\n                <ion-input placeholder="Enter username" [(ngModel)]="name" name="name"></ion-input>\n              </ion-item>\n            </div>\n        </ion-col>\n    </ion-row>\n    <ion-row>\n        <ion-col class="rp-as-range">\n            <div class="rp-as-text">\n              <ion-item fill="solid">\n                <ion-label position="floating">Password : </ion-label>\n                <ion-input placeholder="Enter password" [(ngModel)]="password" name="password"></ion-input>\n              </ion-item>\n            </div>\n        </ion-col>\n    </ion-row>\n\n      </form>\n      <button ion-button (click)="handleLogin()" class="login"></button>\n      <button ion-button (click)="closeModalLogin()" class="cancle"></button>\n      </ion-grid>\n'/*ion-inline-end:"C:\Ionic\Nit2\Nit\src\components\login\login.html"*/
+            selector: 'login',template:/*ion-inline-start:"C:\Ionic\Nit2\Nit\src\components\login\login.html"*/'<!-- Generated template for the LoginComponent component -->\n<img class="rp-bg_image" src="./././assets/imgs/setting-box.png" alt="">\n<div class="nit_setting_title"><span>LOGIN</span></div>\n<div class="nit_setting">\n  <ion-grid>\n    <form>\n    <ion-row>\n        <ion-col class="rp-as-range">\n            <div class="rp-as-text">\n              <ion-item fill="solid">\n                <ion-label position="floating">User Name : </ion-label>\n                <ion-input placeholder="Enter username" [(ngModel)]="name" name="name"></ion-input>\n              </ion-item>\n            </div>\n        </ion-col>\n    </ion-row>\n    <ion-row>\n        <ion-col class="rp-as-range">\n            <div class="rp-as-text">\n              <ion-item fill="solid">\n                <ion-label position="floating">Password : </ion-label>\n                <ion-input type= \'password\' placeholder="Enter password" [(ngModel)]="password" name="password"></ion-input>\n              </ion-item>\n            </div>\n        </ion-col>\n    </ion-row>\n\n      </form>\n      <button ion-button (click)="handleLogin()" class="login"></button>\n      <button ion-button (click)="closeModalLogin()" class="cancle"></button>\n      </ion-grid>\n'/*ion-inline-end:"C:\Ionic\Nit2\Nit\src\components\login\login.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ViewController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */]])
@@ -1008,6 +1033,80 @@ var MyApp = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=app.component.js.map
+
+/***/ }),
+
+/***/ 695:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterUserComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(696);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(31);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/**
+ * Generated class for the RegisterUserComponent component.
+ *
+ * See https://angular.io/api/core/Component for more info on Angular
+ * Components.
+ */
+var RegisterUserComponent = /** @class */ (function () {
+    function RegisterUserComponent(navCtrl, http) {
+        this.navCtrl = navCtrl;
+        this.http = http;
+        this.checkbox = false;
+        console.log('Hello RegisterUserComponent Component');
+    }
+    RegisterUserComponent.prototype.handleRegisterUser = function () {
+        var _this = this;
+        var data = { name: this.name, password: this.password };
+        var url = "https://630d63c4b37c364eb7036ff7.mockapi.io/users";
+        this.http.post(url, data)
+            .subscribe(function (response) {
+            console.log('API response:', response.status);
+            if (response.status === 200) {
+                console.log('Success!');
+            }
+            else {
+                console.log('Error:', response.status);
+            }
+        });
+        setTimeout(function () {
+            _this.navCtrl.pop();
+        }, 300);
+    };
+    RegisterUserComponent.prototype.closeModalLogin = function () {
+        var _this = this;
+        setTimeout(function () {
+            _this.navCtrl.pop();
+        }, 300);
+    };
+    RegisterUserComponent.prototype.handleChange = function () {
+        console.log(this.checkbox);
+    };
+    RegisterUserComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
+            selector: 'register-user',template:/*ion-inline-start:"C:\Ionic\Nit2\Nit\src\components\register-user\register-user.html"*/'<!-- Generated template for the RegisterUserComponent component -->\n<div>\n  <img class="rp-bg_image" src="./././assets/imgs/setting-box.png" alt="">\n<div class="nit_setting_title"><span>REGISTER</span></div>\n<div class="nit_setting">\n  <ion-grid>\n    <form>\n    <ion-row>\n        <ion-col class="rp-as-range">\n            <div class="rp-as-text">\n              <ion-item fill="solid">\n                <ion-label position="floating">User Name : </ion-label>\n                <ion-input placeholder="Enter username"  name="name" [(ngModel)]="name"></ion-input>\n              </ion-item>\n            </div>\n        </ion-col>\n    </ion-row>\n    <ion-row>\n        <ion-col class="rp-as-range">\n            <div class="rp-as-text">\n              <ion-item fill="solid">\n                <ion-label position="floating">Password : </ion-label>\n                <ion-input  type= \'password\' placeholder="Enter password" [(ngModel)]="password" name="password"></ion-input>\n              </ion-item>\n            </div>\n        </ion-col>\n    </ion-row>\n    <ion-row class="checkbox_icon">\n      <ion-item>\n        <ion-checkbox slot="start" [(ngModel)]="checkbox" name="checkbox" (ionChange)="handleChange()"></ion-checkbox>\n        <ion-label>I agree to the terms and conditions</ion-label>\n      </ion-item>\n    </ion-row>\n\n      </form>\n      <button ion-button *ngIf="this.checkbox"  (click)="handleRegisterUser()" class="login"></button>\n      <button ion-button *ngIf="!this.checkbox"   class="nologin"></button>\n      <button ion-button (click)="closeModalLogin()" class="cancle"></button>\n      </ion-grid>\n\n</div>\n'/*ion-inline-end:"C:\Ionic\Nit2\Nit\src\components\register-user\register-user.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
+    ], RegisterUserComponent);
+    return RegisterUserComponent;
+}());
+
+//# sourceMappingURL=register-user.js.map
 
 /***/ })
 

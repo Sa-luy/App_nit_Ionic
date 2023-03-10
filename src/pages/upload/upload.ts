@@ -1,6 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
+// import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
-import { AppInjector } from '../../app/app-injecter';
 import { HomePage } from '../home/home';
 
 @IonicPage()
@@ -9,7 +11,8 @@ import { HomePage } from '../home/home';
   selector: 'page-upload',
   templateUrl: 'upload.html',
 })
-export class UploadPage {
+export class UploadPage implements OnInit {
+
   @ViewChild('slideWithNav') slideWithNav: Slides;
   link:string ;
   banner: string;
@@ -17,20 +20,23 @@ export class UploadPage {
   public homePage: HomePage
   sliderOne: any;
   userBanner:any  ;
+  uploadForm: FormGroup;
 
 
 
-  constructor(public navCtrl: NavController,
-     public navParams: NavParams,
 
+  constructor(public navCtrl: NavController,public navParams: NavParams, private formBuilder: FormBuilder,
+    private http: HttpClient)
+   { this.sliderOne ={isBeginningSlide: true, isEndSlide: false,};
 
-       ) {
-        this.sliderOne =
-    {
-      isBeginningSlide: true,
-      isEndSlide: false,
-    }
-        }
+  }
+  ngOnInit() {
+    this.uploadForm = this.formBuilder.group({
+      url_image: ['', Validators.required],
+      link: ['', Validators.required]
+    });
+
+  }
 
   ionViewDidLoad() {
 
@@ -38,28 +44,32 @@ export class UploadPage {
     this.userBanner=this.homePage.sliderOne.slidesItems;
   }
 
-  handleSubmit(){
-
-    if (!this.selectedFile) {
-      console.log('No file selected');
-      return;
-    }
-    const reader = new FileReader();
-    reader.readAsDataURL(this.selectedFile);
-    reader.onload = () => {
-      this.banner = reader.result.toString();
-      localStorage.setItem('image', this.banner);
-      let data = {
-        link:this.link,
-        url_image:this.banner
-      }
-      this.addBanner(data)
-    };
-  }
-
   onFileSelected(event) {
     this.selectedFile = <File>event.target.files[0];
+
+
   }
+  handleSubmit(){
+
+
+    const url = 'https://nitgame/banner';
+    const formData = new FormData();
+    formData.append('link', this.link);
+    formData.append('url_image', this.selectedFile);
+    console.log(formData);
+
+    this.http.post(url, formData).subscribe(response => {
+      console.log('Banner created successfully');
+    }, error => {
+      console.error('Error creating banner', error);
+    });
+
+
+
+
+}
+
+
 
   addBanner(data:any){
     this.userBanner =[...this.userBanner,data];

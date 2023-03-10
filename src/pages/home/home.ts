@@ -6,6 +6,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { GlobalVars } from '../../app/global';
 import { UploadPage } from '../upload/upload';
+import { FormBuilder } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -37,9 +39,11 @@ export class HomePage {
     public navCtrl: NavController,
       public navParams: NavParams,
       private iab: InAppBrowser,
+      private formBuilder: FormBuilder,
+      private http: HttpClient
 
       ) {
-    let uploadPage = new UploadPage(this.navCtrl, this.navParams,);
+    let uploadPage = new UploadPage(this.navCtrl, this.navParams,this.formBuilder,this.http);
 
     this.sliderOne =
     {
@@ -102,14 +106,19 @@ export class HomePage {
 
   openModalLogin(){
     this.myGlobal.openModalByComponentName('LoginComponent')
- 
+
     console.log('Open modal ');
 
   }
-  openUpload() {
-    this.navCtrl.push(UploadPage, { addSlide: this.addSlide.bind(this) });
+  openModalRegister(){
+    this.myGlobal.openModalByComponentName('RegisterUserComponent')
 
   }
+  openUpload() {
+
+    this.myGlobal.openModalByComponentName('UploadPage')
+  }
+
 
   openLink(url: string) {
     const browser = this.iab.create(url,'_self')

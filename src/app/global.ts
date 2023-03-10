@@ -19,7 +19,7 @@ export class GlobalVars {
     public global_SmartAudio: SmartAudio;
     public volume_music = 0.5;
     public volume_click = 0.5;
-    public isLogin = false;
+    public isLogin = true;
 
 
     public openModalByComponentName(comName: string, params: string[] = [""], isSecondPop = false) {
@@ -29,7 +29,7 @@ console.log(comName);
         enableBackdropDismiss: false,
         showBackdrop: false,
       }
-      if(comName=== 'LoginComponent')myModalOption.cssClass = 'modal-login';
+      if(comName=== 'LoginComponent' ||comName=='RegisterUserComponent')myModalOption.cssClass = 'modal-login';
       if(comName=== 'SettingComponent')myModalOption.cssClass = 'modal-setting';
 
 
