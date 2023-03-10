@@ -46,6 +46,9 @@ export class LoginComponent {
     checkLogin? this.myGlobal.setLogin(true):this.myGlobal.setLogin(false)
 
   }
-
-
+  closeModalLogin(){
+  setTimeout(() => {
+    this.navCtrl.pop();
+  }, 300);
+  }
 }

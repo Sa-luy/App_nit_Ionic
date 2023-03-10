@@ -5,18 +5,17 @@ import { ErrorHandler, Injector, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-
-import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { ModalPage } from '../pages/modal/modal';
-import { GlobalVars } from './global';
 import { setAppInjector } from './app-injecter';
 import { NativeAudio } from '@awesome-cordova-plugins/native-audio/ngx';
 import { SmartAudio } from '../providers/smart-audio/smart-audio';
 import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
-import { Slides } from 'ionic-angular';
 import { UploadPage } from '../pages/upload/upload';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+
+import { MyApp } from './app.component';
+import { ModalPage } from '../pages/modal/modal';
+import { GlobalVars } from './global';
+import { HomePage } from '../pages/home/home';
 
 
 @NgModule({
@@ -39,8 +38,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
     HomePage,
+    MyApp,
     SettingComponent,
     LoginComponent,
     UploadPage,
@@ -52,6 +51,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     GlobalVars,
     InAppBrowser,
     NativeAudio,
+    HomePage,
     SmartAudio,
     NativeStorage,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

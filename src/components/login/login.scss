@@ -65,4 +65,33 @@ margin-top: -7px;
   font-weight: bolder;
   text-shadow: -1px 2px #ff7110;
   }
+  .login {
+    position: relative;
+    left: 170px;
+    top: 20px;
+    border-radius: 50%;
+    background-image: url(../assets/imgs/ok-2.png);
+    background-size: 60px 60px;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 60px;
+    height: 60px;
+    z-index: 10000;
+  }
+  .cancle {
+    position: relative;
+    left: 30px;
+    bottom: 45px;
+    border-radius: 50%;
+    background-image: url(../assets/imgs/cancle.png);
+    background-size: 60px 60px;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 60px;
+    height: 60px;
+    z-index: 10000;
+  }
+.modal-login {
+  background-color: #ff7110;
+}
 }

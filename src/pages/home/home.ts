@@ -1,7 +1,7 @@
 import { AppInjector } from './../../app/app-injecter';
 import { Component , ViewChild } from '@angular/core';
 import { NavController, NavParams, Slides } from 'ionic-angular';
-import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 
 import { GlobalVars } from '../../app/global';
@@ -18,6 +18,13 @@ export class HomePage {
 
   @ViewChild('slideWithNav') slideWithNav: Slides;
   sliderOne: any;
+  sliders:any=[
+    {
+      link:'https://ttlm.vnggames.com/index.html',
+      url_image:"https://www.techsignin.com/wp-content/uploads/2016/05/vo-lam-truyen-ky-vinagame-vng.jpg"
+    },
+
+  ];
   //Coverflow
   slideOptsOne = {
     initialSlide: 0,
@@ -29,39 +36,21 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
       public navParams: NavParams,
-      private iab: InAppBrowser
-      ) {
-    let uploadPage = new UploadPage(this.navCtrl, this.navParams);
+      private iab: InAppBrowser,
 
+      ) {
+    let uploadPage = new UploadPage(this.navCtrl, this.navParams,);
 
     this.sliderOne =
     {
       isBeginningSlide: true,
       isEndSlide: false,
-      slidesItems: [
-        {
-          id: 1,
-          path:'https://volamm.zing.vn/index.html'
-        },
-        {
-          id: 2,
-          path:'https://ttlm.vnggames.com/index.html'
-        },
-        {
-          id: 3,
-          path:'https://ngukiem3d.com/'
-        },
-        {
-          id: 4,
-          path:'https://vltkm.vnggames.com/'
-        },
-        {
-          id: 5,
-          path:'https://vltkm.zing.vn/su-kien/phien-ban-moi-son-ha-xa-tac/cap-nhat-khac.html'
-        }
-      ]
+      slidesItems:this.sliders
     };
 
+  }
+  addSlide(item: any) {
+    this.sliders.push(item);
   }
 
   //Move to Next slide
@@ -112,25 +101,28 @@ export class HomePage {
   }
 
   openModalLogin(){
-    // console.log('Open modal login');
     this.myGlobal.openModalByComponentName('LoginComponent')
+ 
+    console.log('Open modal ');
 
   }
   openUpload() {
-    this.navCtrl.push(UploadPage)
+    this.navCtrl.push(UploadPage, { addSlide: this.addSlide.bind(this) });
 
   }
-  //in_app_browser
+
   openLink(url: string) {
-    this.iab.create(url, '_blank');
+    const browser = this.iab.create(url,'_self')
+
   }
-  //endin_app_browser
+  ionViewWillEnter() {
+    this.slideWithNav.update();
+  }
 
   ngAfterViewInit() {
     // this.slideWithNav.Slides = 2000;
     this.slideWithNav.isBeginning
     // this.slides.autoplayDisableOnInteraction = false;
 }
-
 
 }

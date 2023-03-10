@@ -30,6 +30,10 @@
             {
               "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
+              "count": 1
             }
           ]
         }
@@ -38,6 +42,9 @@
   },
   "installed_plugins": {
     "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.goosef.nit"
+    },
+    "cordova-plugin-inappbrowser": {
       "PACKAGE_NAME": "com.goosef.nit"
     }
   },
@@ -50,9 +57,18 @@
       "clobbers": [
         "device"
       ]
+    },
+    {
+      "id": "cordova-plugin-inappbrowser.inappbrowser",
+      "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+      "pluginId": "cordova-plugin-inappbrowser",
+      "clobbers": [
+        "cordova.InAppBrowser.open"
+      ]
     }
   ],
   "plugin_metadata": {
-    "cordova-plugin-device": "2.0.2"
+    "cordova-plugin-device": "2.0.2",
+    "cordova-plugin-inappbrowser": "5.0.0"
   }
 }

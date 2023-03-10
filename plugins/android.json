@@ -9,6 +9,9 @@
   "installed_plugins": {
     "cordova-plugin-device": {
       "PACKAGE_NAME": "com.goosef.nit"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.goosef.nit"
     }
   },
   "dependent_plugins": {}

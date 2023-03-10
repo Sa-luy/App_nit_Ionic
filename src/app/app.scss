@@ -18,3 +18,14 @@
 ion-modal.my-popup ion-backdrop {
     visibility: visible;
 }
+.modal-login{
+  .modal-wrapper {
+    .rp-modal_wrapper{
+      .rp-close-pop{
+        display: none;
+      // background-color: aqua!important;
+     }
+   }
+
+  }
+}

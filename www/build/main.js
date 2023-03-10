@@ -1,15 +1,15 @@
 webpackJsonp([2],{
 
-/***/ 161:
+/***/ 153:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ModalPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_injecter__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_global__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jquery__ = __webpack_require__(681);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_injecter__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_global__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jquery__ = __webpack_require__(670);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_jquery__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -100,14 +100,13 @@ var ModalPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 162:
+/***/ 154:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UploadPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_swiper__ = __webpack_require__(682);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(31);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -139,42 +138,20 @@ var __spread = (this && this.__spread) || function () {
 };
 
 
-
-/**
- * Generated class for the UploadPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 var UploadPage = /** @class */ (function () {
     function UploadPage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.selectedFile = null;
-        this.userBanner = [
-            { link: "https://volamm.zing.vn/index.html",
-                banner: "./././assets/games/1.jpeg"
-            },
-            { link: "#1",
-                banner: "./././assets/games/2.jpeg"
-            },
-        ];
-        this.mySwiper = new __WEBPACK_IMPORTED_MODULE_2_swiper__["a" /* Swiper */]('.swiper-container', {});
         this.sliderOne =
             {
                 isBeginningSlide: true,
                 isEndSlide: false,
-                slidesItems: this.userBanner
             };
     }
     UploadPage.prototype.ionViewDidLoad = function () {
-        this.sliderOne = {
-            isBeginningSlide: true,
-            isEndSlide: false,
-            slidesItems: this.userBanner
-        };
-        console.log(this.userBanner);
-        console.log('open UploadPage');
+        this.homePage = this.navCtrl.getPrevious().instance;
+        this.userBanner = this.homePage.sliderOne.slidesItems;
     };
     UploadPage.prototype.handleSubmit = function () {
         var _this = this;
@@ -189,7 +166,7 @@ var UploadPage = /** @class */ (function () {
             localStorage.setItem('image', _this.banner);
             var data = {
                 link: _this.link,
-                banner: _this.banner
+                url_image: _this.banner
             };
             _this.addBanner(data);
         };
@@ -199,48 +176,9 @@ var UploadPage = /** @class */ (function () {
     };
     UploadPage.prototype.addBanner = function (data) {
         this.userBanner = __spread(this.userBanner, [data]);
-        console.log(this.userBanner);
-        this.updateSlides();
-    };
-    //Move to Next slide
-    UploadPage.prototype.slideNext = function (object, slideView) {
-        slideView.slideNext(500);
-    };
-    //Move to previous slide
-    UploadPage.prototype.slidePrev = function (object, slideView) {
-        slideView.slidePrev(500);
-    };
-    //Method called when slide is changed by drag or navigation
-    UploadPage.prototype.SlideDidChange = function (object, slideView) {
-        this.checkIfNavDisabled(object, slideView);
-    };
-    //Call methods to check if slide is first or last to enable disbale navigation
-    UploadPage.prototype.checkIfNavDisabled = function (object, slideView) {
-        this.checkisBeginning(object, slideView);
-        this.checkisEnd(object, slideView);
-    };
-    UploadPage.prototype.checkisBeginning = function (object, slideView) {
-        if (slideView.isBeginning()) {
-            object.isBeginningSlide = true;
-        }
-        else {
-            object.isBeginningSlide = false;
-        }
-    };
-    UploadPage.prototype.checkisEnd = function (object, slideView) {
-        // slideView.isEnd().then((istrue) => {
-        //   object.isEndSlide = istrue;
-        // });
-        if (slideView.isEnd()) {
-            object.isEndSlide = true;
-        }
-        else {
-            object.isEndSlide = false;
-        }
-    };
-    UploadPage.prototype.updateSlides = function () {
-        this.sliderOne.slidesItems = this.userBanner;
-        this.slideWithNav.update();
+        var addSlide = this.navParams.get('addSlide');
+        addSlide(data);
+        this.navCtrl.pop();
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('slideWithNav'),
@@ -248,7 +186,7 @@ var UploadPage = /** @class */ (function () {
     ], UploadPage.prototype, "slideWithNav", void 0);
     UploadPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-upload',template:/*ion-inline-start:"C:\Ionic\Nit2\Nit\src\pages\upload\upload.html"*/'<!--\n  Generated template for the UploadPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>upload</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <form (ngSubmit)="handleSubmit()"\n   method="post"\n  enctype="multipart/form-data"\n  >\n    <ion-item>\n      <ion-label>Link</ion-label>\n      <ion-input type="text"  name="link"  [(ngModel)]="link" placeholder="link game"></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-label>Image</ion-label>\n      <ion-input type="file"  name="image" (change)="onFileSelected($event)" ></ion-input>\n      <!-- <ion-textarea [(ngModel)]="" name="description"></ion-textarea> -->\n    </ion-item>\n    <div class="btn-submit">\n\n      <button ion-button type="submit" block  >Add</button>\n    </div>\n  </form>\n  <!-- slide -->\n  <div class="main_content">\n    <ion-grid>\n      <ion-row>\n        <ion-col size="1" class="slider_arrow">\n          <span class="slider-nav arrow-prev" (click)="slidePrev(sliderOne,slideWithNav)">\n            <div class="prev-icon-custom custon-nav" [class.disabled]="sliderOne.isBeginningSlide"></div>\n          </span>\n        </ion-col>\n        <ion-col size="10">\n\n          <ion-slides pager="false"   #slideWithNav (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">\n            <ion-slide *ngFor="let s of sliderOne.slidesItems">\n              <a target="_blank" href="{{ s.link }}"><img src="{{ s.banner }}"></a>\n            </ion-slide>\n\n          </ion-slides>\n\n        </ion-col>\n        <ion-col size="1" class="slider_arrow">\n          <span class="slider-nav arrow-next" (click)="slideNext(sliderOne,slideWithNav)">\n            <div class="next-icon-custom custon-nav" [class.disabled]="sliderOne.isEndSlide"></div>\n          </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n  <!-- end slide -->\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Ionic\Nit2\Nit\src\pages\upload\upload.html"*/,
+            selector: 'page-upload',template:/*ion-inline-start:"C:\Ionic\Nit2\Nit\src\pages\upload\upload.html"*/'<!--\n  Generated template for the UploadPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>upload</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <form (ngSubmit)="handleSubmit()"\n   method="post"\n  enctype="multipart/form-data"\n  >\n    <ion-item>\n      <ion-label>Link</ion-label>\n      <ion-input type="text"  name="link"  [(ngModel)]="link" placeholder="link game"></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-label>Image</ion-label>\n      <ion-input type="file"  name="image" (change)="onFileSelected($event)" ></ion-input>\n      <!-- <ion-textarea [(ngModel)]="" name="description"></ion-textarea> -->\n    </ion-item>\n    <div class="btn-submit">\n\n      <button ion-button type="submit" block  >Add</button>\n    </div>\n  </form>\n  <!-- slide -->\n  <div class="main_content">\n    <ion-grid>\n      <ion-row>\n        <ion-col size="1" class="slider_arrow">\n          <span class="slider-nav arrow-prev" (click)="this.homePage.slidePrev(sliderOne,slideWithNav)">\n            <div class="prev-icon-custom custon-nav" [class.disabled]="this.sliderOne.isBeginningSlide"></div>\n          </span>\n        </ion-col>\n        <ion-col size="10">\n\n          <ion-slides pager="false"   #slideWithNav (ionSlideDidChange)="this.homePage.SlideDidChange(sliderOne,slideWithNav)">\n            <ion-slide *ngFor="let s of this.userBanner">\n              <a  href="#" (click)="openLink(s.path)">\n                <img src="{{ s.url_image }}">\n              </a>\n            </ion-slide>\n\n          </ion-slides>\n\n        </ion-col>\n        <ion-col size="1" class="slider_arrow">\n          <span class="slider-nav arrow-next" (click)="this.homePage.slideNext(sliderOne,slideWithNav)">\n            <div class="next-icon-custom custon-nav" [class.disabled]="sliderOne.isEndSlide"></div>\n          </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n  <!-- end slide -->\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Ionic\Nit2\Nit\src\pages\upload\upload.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */]])
@@ -260,7 +198,7 @@ var UploadPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 173:
+/***/ 165:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -273,20 +211,20 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 173;
+webpackEmptyAsyncContext.id = 165;
 
 /***/ }),
 
-/***/ 314:
+/***/ 306:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
 	"../pages/modal/modal.module": [
-		795,
+		693,
 		1
 	],
 	"../pages/upload/upload.module": [
-		796,
+		694,
 		0
 	]
 };
@@ -301,162 +239,19 @@ function webpackAsyncContext(req) {
 webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 	return Object.keys(map);
 };
-webpackAsyncContext.id = 314;
+webpackAsyncContext.id = 306;
 module.exports = webpackAsyncContext;
 
 /***/ }),
 
-/***/ 360:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_app_injecter__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_in_app_browser__ = __webpack_require__(361);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_global__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__upload_upload__ = __webpack_require__(162);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-var HomePage = /** @class */ (function () {
-    function HomePage(navCtrl, navParams, iab) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.iab = iab;
-        this.myGlobal = __WEBPACK_IMPORTED_MODULE_0__app_app_injecter__["a" /* AppInjector */].get(__WEBPACK_IMPORTED_MODULE_4__app_global__["a" /* GlobalVars */]);
-        //Coverflow
-        this.slideOptsOne = {
-            initialSlide: 0,
-            slidesPerView: 1,
-            autoplay: true
-        };
-        var uploadPage = new __WEBPACK_IMPORTED_MODULE_5__upload_upload__["a" /* UploadPage */](this.navCtrl, this.navParams);
-        this.sliderOne =
-            {
-                isBeginningSlide: true,
-                isEndSlide: false,
-                slidesItems: [
-                    {
-                        id: 1,
-                        path: 'https://volamm.zing.vn/index.html'
-                    },
-                    {
-                        id: 2,
-                        path: 'https://ttlm.vnggames.com/index.html'
-                    },
-                    {
-                        id: 3,
-                        path: 'https://ngukiem3d.com/'
-                    },
-                    {
-                        id: 4,
-                        path: 'https://vltkm.vnggames.com/'
-                    },
-                    {
-                        id: 5,
-                        path: 'https://vltkm.zing.vn/su-kien/phien-ban-moi-son-ha-xa-tac/cap-nhat-khac.html'
-                    }
-                ]
-            };
-    }
-    //Move to Next slide
-    HomePage.prototype.slideNext = function (object, slideView) {
-        slideView.slideNext(500);
-    };
-    //Move to previous slide
-    HomePage.prototype.slidePrev = function (object, slideView) {
-        slideView.slidePrev(500);
-    };
-    //Method called when slide is changed by drag or navigation
-    HomePage.prototype.SlideDidChange = function (object, slideView) {
-        this.checkIfNavDisabled(object, slideView);
-    };
-    //Call methods to check if slide is first or last to enable disbale navigation
-    HomePage.prototype.checkIfNavDisabled = function (object, slideView) {
-        this.checkisBeginning(object, slideView);
-        this.checkisEnd(object, slideView);
-    };
-    HomePage.prototype.checkisBeginning = function (object, slideView) {
-        if (slideView.isBeginning()) {
-            object.isBeginningSlide = true;
-        }
-        else {
-            object.isBeginningSlide = false;
-        }
-    };
-    HomePage.prototype.checkisEnd = function (object, slideView) {
-        // slideView.isEnd().then((istrue) => {
-        //   object.isEndSlide = istrue;
-        // });
-        if (slideView.isEnd()) {
-            object.isEndSlide = true;
-        }
-        else {
-            object.isEndSlide = false;
-        }
-    };
-    HomePage.prototype.openSeting = function () {
-        this.myGlobal.global_SmartAudio.play('click_sound');
-        this.myGlobal.openModalByComponentName('SettingComponent');
-    };
-    HomePage.prototype.openModalLogin = function () {
-        // console.log('Open modal login');
-        this.myGlobal.openModalByComponentName('LoginComponent');
-    };
-    HomePage.prototype.openUpload = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__upload_upload__["a" /* UploadPage */]);
-    };
-    //in_app_browser
-    HomePage.prototype.openLink = function (url) {
-        this.iab.create(url, '_blank');
-    };
-    //endin_app_browser
-    HomePage.prototype.ngAfterViewInit = function () {
-        // this.slideWithNav.Slides = 2000;
-        this.slideWithNav.isBeginning;
-        // this.slides.autoplayDisableOnInteraction = false;
-    };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_8" /* ViewChild */])('slideWithNav'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* Slides */])
-    ], HomePage.prototype, "slideWithNav", void 0);
-    HomePage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"C:\Ionic\Nit2\Nit\src\pages\home\home.html"*/'<img class="rp-landing_image" src="./././assets/imgs/nit_bg1.png" alt="">\n\n<ion-content padding>\n  <img class="nit_main_img" src="./././assets/imgs/nit_main_img.png" alt="">\n  <button class="btn-login" (click)="openModalLogin()">Login</button>\n\n  <div class="nit_button_section">\n    <a  class="nit_button" (click)="this.openSeting()">test modal</a>\n    <a  class="nit_button" (click)="this.openLink(\'https://cuuam.gosu.vn/home/intro/phong-khoi-kiem-ca\')">test2</a>\n    <button ion-button class="btn_add_game" *ngIf="this.myGlobal.isLogin" (click)="this.openUpload()"><ion-icon name="add-circle-outline"></ion-icon></button>\n    <ion-grid>\n      <ion-row>\n        <ion-col size="1" class="slider_arrow">\n          <span class="slider-nav arrow-prev" (click)="slidePrev(sliderOne,slideWithNav)">\n            <div class="prev-icon-custom custon-nav" [class.disabled]="sliderOne.isBeginningSlide"></div>\n          </span>\n        </ion-col>\n        <ion-col size="10">\n\n          <ion-slides pager="false"   #slideWithNav (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">\n            <ion-slide *ngFor="let s of sliderOne.slidesItems">\n              <a target="_blank" href="{{ s.path }}"><img src="./././assets/games/{{s.id}}.jpeg"></a>\n            </ion-slide>\n\n          </ion-slides>\n\n        </ion-col>\n        <ion-col size="1" class="slider_arrow">\n          <span class="slider-nav arrow-next" (click)="slideNext(sliderOne,slideWithNav)">\n            <div class="next-icon-custom custon-nav" [class.disabled]="sliderOne.isEndSlide"></div>\n          </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n\n\n\n\n</ion-content>\n'/*ion-inline-end:"C:\Ionic\Nit2\Nit\src\pages\home\home.html"*/
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_3__ionic_native_in_app_browser__["a" /* InAppBrowser */]])
-    ], HomePage);
-    return HomePage;
-}());
-
-//# sourceMappingURL=home.js.map
-
-/***/ }),
-
-/***/ 362:
+/***/ 349:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SmartAudio; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__awesome_cordova_plugins_native_audio_ngx__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__awesome_cordova_plugins_native_audio_ngx__ = __webpack_require__(64);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -600,13 +395,145 @@ var SmartAudio = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 363:
+/***/ 351:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_app_injecter__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_in_app_browser__ = __webpack_require__(350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_global__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__upload_upload__ = __webpack_require__(154);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var HomePage = /** @class */ (function () {
+    function HomePage(navCtrl, navParams, iab) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.iab = iab;
+        this.myGlobal = __WEBPACK_IMPORTED_MODULE_0__app_app_injecter__["a" /* AppInjector */].get(__WEBPACK_IMPORTED_MODULE_4__app_global__["a" /* GlobalVars */]);
+        this.sliders = [
+            {
+                link: 'https://ttlm.vnggames.com/index.html',
+                url_image: "https://www.techsignin.com/wp-content/uploads/2016/05/vo-lam-truyen-ky-vinagame-vng.jpg"
+            },
+        ];
+        //Coverflow
+        this.slideOptsOne = {
+            initialSlide: 0,
+            slidesPerView: 1,
+            autoplay: true
+        };
+        var uploadPage = new __WEBPACK_IMPORTED_MODULE_5__upload_upload__["a" /* UploadPage */](this.navCtrl, this.navParams);
+        this.sliderOne =
+            {
+                isBeginningSlide: true,
+                isEndSlide: false,
+                slidesItems: this.sliders
+            };
+    }
+    HomePage.prototype.addSlide = function (item) {
+        this.sliders.push(item);
+    };
+    //Move to Next slide
+    HomePage.prototype.slideNext = function (object, slideView) {
+        slideView.slideNext(500);
+    };
+    //Move to previous slide
+    HomePage.prototype.slidePrev = function (object, slideView) {
+        slideView.slidePrev(500);
+    };
+    //Method called when slide is changed by drag or navigation
+    HomePage.prototype.SlideDidChange = function (object, slideView) {
+        this.checkIfNavDisabled(object, slideView);
+    };
+    //Call methods to check if slide is first or last to enable disbale navigation
+    HomePage.prototype.checkIfNavDisabled = function (object, slideView) {
+        this.checkisBeginning(object, slideView);
+        this.checkisEnd(object, slideView);
+    };
+    HomePage.prototype.checkisBeginning = function (object, slideView) {
+        if (slideView.isBeginning()) {
+            object.isBeginningSlide = true;
+        }
+        else {
+            object.isBeginningSlide = false;
+        }
+    };
+    HomePage.prototype.checkisEnd = function (object, slideView) {
+        // slideView.isEnd().then((istrue) => {
+        //   object.isEndSlide = istrue;
+        // });
+        if (slideView.isEnd()) {
+            object.isEndSlide = true;
+        }
+        else {
+            object.isEndSlide = false;
+        }
+    };
+    HomePage.prototype.openSeting = function () {
+        this.myGlobal.global_SmartAudio.play('click_sound');
+        this.myGlobal.openModalByComponentName('SettingComponent');
+    };
+    HomePage.prototype.openModalLogin = function () {
+        this.myGlobal.openModalByComponentName('LoginComponent');
+        console.log('Open modal ');
+    };
+    HomePage.prototype.openUpload = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__upload_upload__["a" /* UploadPage */], { addSlide: this.addSlide.bind(this) });
+    };
+    HomePage.prototype.openLink = function (url) {
+        var browser = this.iab.create(url, '_self');
+    };
+    HomePage.prototype.ionViewWillEnter = function () {
+        this.slideWithNav.update();
+    };
+    HomePage.prototype.ngAfterViewInit = function () {
+        // this.slideWithNav.Slides = 2000;
+        this.slideWithNav.isBeginning;
+        // this.slides.autoplayDisableOnInteraction = false;
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_8" /* ViewChild */])('slideWithNav'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* Slides */])
+    ], HomePage.prototype, "slideWithNav", void 0);
+    HomePage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
+            selector: 'page-home',template:/*ion-inline-start:"C:\Ionic\Nit2\Nit\src\pages\home\home.html"*/'<img class="rp-landing_image" src="./././assets/imgs/nit_bg1.png" alt="">\n\n<ion-content padding>\n  <img class="nit_main_img" src="./././assets/imgs/nit_main_img.png" alt="">\n  <button class="btn-login" (click)="openModalLogin()">Login</button>\n\n  <div class="nit_button_section">\n    <a  class="nit_button" (click)="this.openSeting()">test modal</a>\n    <button ion-button class="btn_add_game" *ngIf="this.myGlobal.isLogin" (click)="this.openUpload()"><ion-icon name="add-circle-outline"></ion-icon></button>\n    <ion-grid>\n      <ion-row>\n        <ion-col size="1" class="slider_arrow">\n          <span class="slider-nav arrow-prev" (click)="slidePrev(sliderOne,slideWithNav)">\n            <div class="prev-icon-custom custon-nav" [class.disabled]="sliderOne.isBeginningSlide"></div>\n          </span>\n        </ion-col>\n        <ion-col size="10">\n\n          <ion-slides pager="false"   #slideWithNav (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">\n            <ion-slide *ngFor="let s of sliderOne.slidesItems">\n              <a  href="#" (click)="this.openLink(s.link)">\n                <img src="{{ s.url_image }}">\n              </a>\n            </ion-slide>\n\n          </ion-slides>\n\n        </ion-col>\n        <ion-col size="1" class="slider_arrow">\n          <span class="slider-nav arrow-next" (click)="slideNext(sliderOne,slideWithNav)">\n            <div class="next-icon-custom custon-nav" [class.disabled]="sliderOne.isEndSlide"></div>\n          </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n\n\n\n\n</ion-content>\n'/*ion-inline-end:"C:\Ionic\Nit2\Nit\src\pages\home\home.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__ionic_native_in_app_browser__["a" /* InAppBrowser */]])
+    ], HomePage);
+    return HomePage;
+}());
+
+//# sourceMappingURL=home.js.map
+
+/***/ }),
+
+/***/ 352:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(364);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(368);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(353);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(357);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -614,28 +541,28 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 368:
+/***/ 357:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_setting_setting__ = __webpack_require__(369);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_login_login__ = __webpack_require__(790);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_setting_setting__ = __webpack_require__(358);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_login_login__ = __webpack_require__(688);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(357);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__ = __webpack_require__(359);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__(794);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_home_home__ = __webpack_require__(360);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_modal_modal__ = __webpack_require__(161);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__global__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__app_injecter__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__awesome_cordova_plugins_native_audio_ngx__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__providers_smart_audio_smart_audio__ = __webpack_require__(362);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__awesome_cordova_plugins_native_storage_ngx__ = __webpack_require__(174);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_upload_upload__ = __webpack_require__(162);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ionic_native_in_app_browser__ = __webpack_require__(361);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__ = __webpack_require__(348);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_injecter__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__awesome_cordova_plugins_native_audio_ngx__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_smart_audio_smart_audio__ = __webpack_require__(349);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__awesome_cordova_plugins_native_storage_ngx__ = __webpack_require__(166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_upload_upload__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_in_app_browser__ = __webpack_require__(350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__app_component__ = __webpack_require__(692);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_modal_modal__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__global__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_home_home__ = __webpack_require__(351);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -664,21 +591,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var AppModule = /** @class */ (function () {
     function AppModule(injector) {
-        Object(__WEBPACK_IMPORTED_MODULE_11__app_injecter__["b" /* setAppInjector */])(injector);
+        Object(__WEBPACK_IMPORTED_MODULE_7__app_injecter__["b" /* setAppInjector */])(injector);
     }
     AppModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_15__pages_upload_upload__["a" /* UploadPage */],
-                __WEBPACK_IMPORTED_MODULE_8__pages_home_home__["a" /* HomePage */],
+                __WEBPACK_IMPORTED_MODULE_13__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_11__pages_upload_upload__["a" /* UploadPage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_home_home__["a" /* HomePage */],
                 __WEBPACK_IMPORTED_MODULE_0__components_setting_setting__["a" /* SettingComponent */],
                 __WEBPACK_IMPORTED_MODULE_1__components_login_login__["a" /* LoginComponent */],
-                __WEBPACK_IMPORTED_MODULE_9__pages_modal_modal__["a" /* ModalPage */]
+                __WEBPACK_IMPORTED_MODULE_14__pages_modal_modal__["a" /* ModalPage */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__["a" /* BrowserModule */],
-                __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["e" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */], {
+                __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["e" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_13__app_component__["a" /* MyApp */], {
                     mode: 'ios',
                     scrollPadding: false,
                     scrollAssist: false,
@@ -692,21 +619,22 @@ var AppModule = /** @class */ (function () {
             ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["c" /* IonicApp */]],
             entryComponents: [
-                __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_8__pages_home_home__["a" /* HomePage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_home_home__["a" /* HomePage */],
+                __WEBPACK_IMPORTED_MODULE_13__app_component__["a" /* MyApp */],
                 __WEBPACK_IMPORTED_MODULE_0__components_setting_setting__["a" /* SettingComponent */],
                 __WEBPACK_IMPORTED_MODULE_1__components_login_login__["a" /* LoginComponent */],
-                __WEBPACK_IMPORTED_MODULE_15__pages_upload_upload__["a" /* UploadPage */],
-                __WEBPACK_IMPORTED_MODULE_9__pages_modal_modal__["a" /* ModalPage */],
+                __WEBPACK_IMPORTED_MODULE_11__pages_upload_upload__["a" /* UploadPage */],
+                __WEBPACK_IMPORTED_MODULE_14__pages_modal_modal__["a" /* ModalPage */],
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__["a" /* StatusBar */],
                 __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__["a" /* SplashScreen */],
-                __WEBPACK_IMPORTED_MODULE_10__global__["a" /* GlobalVars */],
-                __WEBPACK_IMPORTED_MODULE_16__ionic_native_in_app_browser__["a" /* InAppBrowser */],
-                __WEBPACK_IMPORTED_MODULE_12__awesome_cordova_plugins_native_audio_ngx__["a" /* NativeAudio */],
-                __WEBPACK_IMPORTED_MODULE_13__providers_smart_audio_smart_audio__["a" /* SmartAudio */],
-                __WEBPACK_IMPORTED_MODULE_14__awesome_cordova_plugins_native_storage_ngx__["a" /* NativeStorage */],
+                __WEBPACK_IMPORTED_MODULE_15__global__["a" /* GlobalVars */],
+                __WEBPACK_IMPORTED_MODULE_12__ionic_native_in_app_browser__["a" /* InAppBrowser */],
+                __WEBPACK_IMPORTED_MODULE_8__awesome_cordova_plugins_native_audio_ngx__["a" /* NativeAudio */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_home_home__["a" /* HomePage */],
+                __WEBPACK_IMPORTED_MODULE_9__providers_smart_audio_smart_audio__["a" /* SmartAudio */],
+                __WEBPACK_IMPORTED_MODULE_10__awesome_cordova_plugins_native_storage_ngx__["a" /* NativeStorage */],
                 { provide: __WEBPACK_IMPORTED_MODULE_3__angular_core__["u" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["d" /* IonicErrorHandler */] }
             ]
         }),
@@ -719,15 +647,15 @@ var AppModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 369:
+/***/ 358:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SettingComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_global__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_global__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_injecter__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__awesome_cordova_plugins_native_audio_ngx__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_injecter__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__awesome_cordova_plugins_native_audio_ngx__ = __webpack_require__(64);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -785,16 +713,16 @@ var SettingComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 46:
+/***/ 43:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GlobalVars; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__awesome_cordova_plugins_native_storage_ngx__ = __webpack_require__(174);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__awesome_cordova_plugins_native_storage_ngx__ = __webpack_require__(166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_modal_modal__ = __webpack_require__(161);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__awesome_cordova_plugins_native_audio_ngx__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_modal_modal__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__awesome_cordova_plugins_native_audio_ngx__ = __webpack_require__(64);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -824,10 +752,15 @@ var GlobalVars = /** @class */ (function () {
     GlobalVars.prototype.openModalByComponentName = function (comName, params, isSecondPop) {
         if (params === void 0) { params = [""]; }
         if (isSecondPop === void 0) { isSecondPop = false; }
+        console.log(comName);
         var myModalOption = {
             enableBackdropDismiss: false,
-            showBackdrop: false
+            showBackdrop: false,
         };
+        if (comName === 'LoginComponent')
+            myModalOption.cssClass = 'modal-login';
+        if (comName === 'SettingComponent')
+            myModalOption.cssClass = 'modal-setting';
         var factoryClass = this.global_factories.find(function (x) { return x.name === comName; });
         var myModalData = {
             home: this,
@@ -901,7 +834,7 @@ var GlobalVars = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 49:
+/***/ 46:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -932,15 +865,15 @@ function setAppInjector(injector) {
 
 /***/ }),
 
-/***/ 790:
+/***/ 688:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_injecter__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_global__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_injecter__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_global__ = __webpack_require__(43);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -981,13 +914,19 @@ var LoginComponent = /** @class */ (function () {
         var checkLogin = true;
         checkLogin ? this.myGlobal.setLogin(true) : this.myGlobal.setLogin(false);
     };
+    LoginComponent.prototype.closeModalLogin = function () {
+        var _this = this;
+        setTimeout(function () {
+            _this.navCtrl.pop();
+        }, 300);
+    };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["O" /* Output */])(),
         __metadata("design:type", Object)
     ], LoginComponent.prototype, "isLogin", void 0);
     LoginComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'login',template:/*ion-inline-start:"C:\Ionic\Nit2\Nit\src\components\login\login.html"*/'<!-- Generated template for the LoginComponent component -->\n\n<img class="rp-bg_image" src="./././assets/imgs/setting-box.png" alt="">\n\n<div class="nit_setting_title"><span>LOGIN</span></div>\n\n<div class="nit_setting">\n\n  <ion-grid>\n\n    <form>\n\n    <ion-row>\n\n        <ion-col class="rp-as-range">\n\n            <div class="rp-as-text">\n\n              <ion-item fill="solid">\n\n                <ion-label position="floating">User Name : </ion-label>\n\n                <ion-input placeholder="Enter username" [(ngModel)]="name" name="name"></ion-input>\n\n              </ion-item>\n\n            </div>\n\n        </ion-col>\n\n    </ion-row>\n\n    <ion-row>\n\n        <ion-col class="rp-as-range">\n\n            <div class="rp-as-text">\n\n              <ion-item fill="solid">\n\n                <ion-label position="floating">Password : </ion-label>\n\n                <ion-input placeholder="Enter password" [(ngModel)]="password" name="password"></ion-input>\n\n              </ion-item>\n\n            </div>\n\n        </ion-col>\n\n    </ion-row>\n\n\n\n      </form>\n\n      <button ion-button (click)="handleLogin()">OK</button>\n\n      </ion-grid>\n\n'/*ion-inline-end:"C:\Ionic\Nit2\Nit\src\components\login\login.html"*/
+            selector: 'login',template:/*ion-inline-start:"C:\Ionic\Nit2\Nit\src\components\login\login.html"*/'<!-- Generated template for the LoginComponent component -->\n<img class="rp-bg_image" src="./././assets/imgs/setting-box.png" alt="">\n<div class="nit_setting_title"><span>LOGIN</span></div>\n<div class="nit_setting">\n  <ion-grid>\n    <form>\n    <ion-row>\n        <ion-col class="rp-as-range">\n            <div class="rp-as-text">\n              <ion-item fill="solid">\n                <ion-label position="floating">User Name : </ion-label>\n                <ion-input placeholder="Enter username" [(ngModel)]="name" name="name"></ion-input>\n              </ion-item>\n            </div>\n        </ion-col>\n    </ion-row>\n    <ion-row>\n        <ion-col class="rp-as-range">\n            <div class="rp-as-text">\n              <ion-item fill="solid">\n                <ion-label position="floating">Password : </ion-label>\n                <ion-input placeholder="Enter password" [(ngModel)]="password" name="password"></ion-input>\n              </ion-item>\n            </div>\n        </ion-col>\n    </ion-row>\n\n      </form>\n      <button ion-button (click)="handleLogin()" class="login"></button>\n      <button ion-button (click)="closeModalLogin()" class="cancle"></button>\n      </ion-grid>\n'/*ion-inline-end:"C:\Ionic\Nit2\Nit\src\components\login\login.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ViewController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */]])
@@ -999,20 +938,20 @@ var LoginComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 794:
+/***/ 692:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__awesome_cordova_plugins_native_audio_ngx__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__awesome_cordova_plugins_native_audio_ngx__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_status_bar__ = __webpack_require__(359);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_splash_screen__ = __webpack_require__(357);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_injecter__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__global__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_home_home__ = __webpack_require__(360);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_smart_audio_smart_audio__ = __webpack_require__(362);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_status_bar__ = __webpack_require__(348);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_splash_screen__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_injecter__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__global__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_home_home__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_smart_audio_smart_audio__ = __webpack_require__(349);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1072,5 +1011,5 @@ var MyApp = /** @class */ (function () {
 
 /***/ })
 
-},[363]);
+},[352]);
 //# sourceMappingURL=main.js.map

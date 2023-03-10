@@ -23,10 +23,16 @@ export class GlobalVars {
 
 
     public openModalByComponentName(comName: string, params: string[] = [""], isSecondPop = false) {
-        const myModalOption: ModalOptions = {
-          enableBackdropDismiss: false,
-          showBackdrop: false
-        }
+console.log(comName);
+
+      let myModalOption: ModalOptions = {
+        enableBackdropDismiss: false,
+        showBackdrop: false,
+      }
+      if(comName=== 'LoginComponent')myModalOption.cssClass = 'modal-login';
+      if(comName=== 'SettingComponent')myModalOption.cssClass = 'modal-setting';
+
+
         let factoryClass = <Type<any>>this.global_factories.find((x: any) => x.name === comName);
 
         const myModalData = {

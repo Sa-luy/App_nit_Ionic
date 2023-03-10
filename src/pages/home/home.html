@@ -6,7 +6,6 @@
 
   <div class="nit_button_section">
     <a  class="nit_button" (click)="this.openSeting()">test modal</a>
-    <a  class="nit_button" (click)="this.openLink('https://cuuam.gosu.vn/home/intro/phong-khoi-kiem-ca')">test2</a>
     <button ion-button class="btn_add_game" *ngIf="this.myGlobal.isLogin" (click)="this.openUpload()"><ion-icon name="add-circle-outline"></ion-icon></button>
     <ion-grid>
       <ion-row>
@@ -19,7 +18,9 @@
 
           <ion-slides pager="false"   #slideWithNav (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">
             <ion-slide *ngFor="let s of sliderOne.slidesItems">
-              <a target="_blank" href="{{ s.path }}"><img src="./././assets/games/{{s.id}}.jpeg"></a>
+              <a  href="#" (click)="this.openLink(s.link)">
+                <img src="{{ s.url_image }}">
+              </a>
             </ion-slide>
 
           </ion-slides>
