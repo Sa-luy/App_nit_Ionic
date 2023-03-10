@@ -1,7 +1,11 @@
 import { AppInjector } from './../../app/app-injecter';
 import { Component , ViewChild } from '@angular/core';
-import { NavController, Slides } from 'ionic-angular';
+import { NavController, NavParams, Slides } from 'ionic-angular';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
+
 import { GlobalVars } from '../../app/global';
+import { UploadPage } from '../upload/upload';
 
 
 @Component({
@@ -10,46 +14,48 @@ import { GlobalVars } from '../../app/global';
 })
 export class HomePage {
   public myGlobal = AppInjector.get(GlobalVars);
+
+
   @ViewChild('slideWithNav') slideWithNav: Slides;
   sliderOne: any;
+  sliders:any=[
+    {
+      link:'https://ttlm.vnggames.com/index.html',
+      url_image:"https://www.techsignin.com/wp-content/uploads/2016/05/vo-lam-truyen-ky-vinagame-vng.jpg"
+    },
+
+  ];
   //Coverflow
   slideOptsOne = {
     initialSlide: 0,
     slidesPerView: 1,
     autoplay:true
     };
- 
 
-  constructor(public navCtrl: NavController) {
-    
+
+  constructor(
+    public navCtrl: NavController,
+      public navParams: NavParams,
+      private iab: InAppBrowser,
+
+      ) {
+    let uploadPage = new UploadPage(this.navCtrl, this.navParams,);
+
     this.sliderOne =
     {
       isBeginningSlide: true,
       isEndSlide: false,
-      slidesItems: [
-        {
-          id: 1
-        },
-        {
-          id: 2
-        },
-        {
-          id: 3
-        },
-        {
-          id: 4
-        },
-        {
-          id: 5
-        }
-      ]
+      slidesItems:this.sliders
     };
-   
+
+  }
+  addSlide(item: any) {
+    this.sliders.push(item);
   }
 
   //Move to Next slide
   slideNext(object, slideView: Slides) {
-  
+
     slideView.slideNext(500);
   }
 
@@ -63,20 +69,20 @@ export class HomePage {
     this.checkIfNavDisabled(object, slideView);
   }
 
-  //Call methods to check if slide is first or last to enable disbale navigation  
+  //Call methods to check if slide is first or last to enable disbale navigation
   checkIfNavDisabled(object, slideView) {
     this.checkisBeginning(object, slideView);
     this.checkisEnd(object, slideView);
   }
 
   checkisBeginning(object, slideView: Slides) {
-   
+
     if (slideView.isBeginning()){
       object.isBeginningSlide = true;
     }else{
       object.isBeginningSlide = false;
     }
-    
+
   }
   checkisEnd(object, slideView: Slides) {
     // slideView.isEnd().then((istrue) => {
@@ -93,10 +99,30 @@ export class HomePage {
     this.myGlobal.global_SmartAudio.play('click_sound');
     this.myGlobal.openModalByComponentName('SettingComponent')
   }
+
+  openModalLogin(){
+    this.myGlobal.openModalByComponentName('LoginComponent')
+ 
+    console.log('Open modal ');
+
+  }
+  openUpload() {
+    this.navCtrl.push(UploadPage, { addSlide: this.addSlide.bind(this) });
+
+  }
+
+  openLink(url: string) {
+    const browser = this.iab.create(url,'_self')
+
+  }
+  ionViewWillEnter() {
+    this.slideWithNav.update();
+  }
+
   ngAfterViewInit() {
     // this.slideWithNav.Slides = 2000;
     this.slideWithNav.isBeginning
     // this.slides.autoplayDisableOnInteraction = false;
 }
-  
+
 }

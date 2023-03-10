@@ -1,0 +1,64 @@
+<!--
+  Generated template for the UploadPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>upload</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form (ngSubmit)="handleSubmit()"
+   method="post"
+  enctype="multipart/form-data"
+  >
+    <ion-item>
+      <ion-label>Link</ion-label>
+      <ion-input type="text"  name="link"  [(ngModel)]="link" placeholder="link game"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Image</ion-label>
+      <ion-input type="file"  name="image" (change)="onFileSelected($event)" ></ion-input>
+      <!-- <ion-textarea [(ngModel)]="" name="description"></ion-textarea> -->
+    </ion-item>
+    <div class="btn-submit">
+
+      <button ion-button type="submit" block  >Add</button>
+    </div>
+  </form>
+  <!-- slide -->
+  <div class="main_content">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="1" class="slider_arrow">
+          <span class="slider-nav arrow-prev" (click)="this.homePage.slidePrev(sliderOne,slideWithNav)">
+            <div class="prev-icon-custom custon-nav" [class.disabled]="this.sliderOne.isBeginningSlide"></div>
+          </span>
+        </ion-col>
+        <ion-col size="10">
+
+          <ion-slides pager="false"   #slideWithNav (ionSlideDidChange)="this.homePage.SlideDidChange(sliderOne,slideWithNav)">
+            <ion-slide *ngFor="let s of this.userBanner">
+              <a  href="#" (click)="openLink(s.path)">
+                <img src="{{ s.url_image }}">
+              </a>
+            </ion-slide>
+
+          </ion-slides>
+
+        </ion-col>
+        <ion-col size="1" class="slider_arrow">
+          <span class="slider-nav arrow-next" (click)="this.homePage.slideNext(sliderOne,slideWithNav)">
+            <div class="next-icon-custom custon-nav" [class.disabled]="sliderOne.isEndSlide"></div>
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <!-- end slide -->
+
+</ion-content>
+

@@ -1,0 +1,31 @@
+<!-- Generated template for the LoginComponent component -->
+<img class="rp-bg_image" src="./././assets/imgs/setting-box.png" alt="">
+<div class="nit_setting_title"><span>LOGIN</span></div>
+<div class="nit_setting">
+  <ion-grid>
+    <form>
+    <ion-row>
+        <ion-col class="rp-as-range">
+            <div class="rp-as-text">
+              <ion-item fill="solid">
+                <ion-label position="floating">User Name : </ion-label>
+                <ion-input placeholder="Enter username" [(ngModel)]="name" name="name"></ion-input>
+              </ion-item>
+            </div>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col class="rp-as-range">
+            <div class="rp-as-text">
+              <ion-item fill="solid">
+                <ion-label position="floating">Password : </ion-label>
+                <ion-input placeholder="Enter password" [(ngModel)]="password" name="password"></ion-input>
+              </ion-item>
+            </div>
+        </ion-col>
+    </ion-row>
+
+      </form>
+      <button ion-button (click)="handleLogin()" class="login"></button>
+      <button ion-button (click)="closeModalLogin()" class="cancle"></button>
+      </ion-grid>

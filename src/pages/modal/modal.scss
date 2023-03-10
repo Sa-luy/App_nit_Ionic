@@ -1,11 +1,15 @@
 page-modal {
+  .modal-login{background-color: aqua;}
 
     //background-color: black;
     border-radius: 8px;
     overflow: hidden;
-    
+  //login-modal
+  .modal-login {
+    display: none;
+  }
     ion-header {
-        
+
         background-color: #a7a9ac;
         left: 16px;
         position: absolute;
@@ -40,12 +44,12 @@ page-modal {
         bottom: 0;
         left: 0;
         z-index: $z-index-overlay;
-      
+
         display: flex;
-      
+
         align-items: center;
         justify-content: center;
-      
+
         contain: strict;
         .modal-wrapper {
           &,
@@ -57,19 +61,19 @@ page-modal {
             top: auto;
             left: auto;
           }
-      
+
           z-index: $z-index-overlay-wrapper;
           display: flex;
           overflow: hidden;
-      
+
           flex-direction: column;
-      
+
           min-width: $alert-min-width;
           //max-height: $alert-max-height;
           max-height: 100%;
-      
+
           opacity: 0;
-      
+
           height: auto;
           max-width: 344px;
           border-radius: $alert-md-border-radius;
@@ -81,10 +85,10 @@ page-modal {
             background-color: color($colors, light);
             overflow: auto;
           }
-    
-         
+
+
           border-width: 0;
-         
+
         }
         // ion-backdrop {
         //   opacity: 0.8 !important;
@@ -98,6 +102,7 @@ page-modal {
           height: 60px;
           margin-top: -55px;
           z-index: 10000;
+
         }
         .rp-modal_wrapper{
           padding: 16px;
@@ -121,12 +126,12 @@ page-modal {
         .rp-modal_wrapper ion-title{
           padding-left: 20px;
         }
-        
+
         .rp-modal_wrapper ion-title > div{
           text-align: left;
           color: white;
           font-family: "RivalSans";
-          font-size: 17px; 
+          font-size: 17px;
         }
         .rp-modal_wrapper .rp-pop_row_back {
           padding: 0;
@@ -135,8 +140,8 @@ page-modal {
         .rp-modal_wrapper .rp-pop_row_back ion-label{
           margin: 0;
         }
-       
-        
+
+
         .modal-wrapper, page-modal {
           background-color: transparent;
         }
@@ -155,8 +160,8 @@ page-modal {
           border-bottom-left-radius: 8px;
           border-bottom-right-radius: 8px;
           border-radius: 8px;
-        } 
-       
+        }
+
     .rp-pop_btn_OK_row{
       width: 100%;
       padding: 0;
@@ -168,7 +173,7 @@ page-modal {
       color: #58595b;
       background-color: #a7a9ac;
       font-family: "RivalSans";
-      font-size: 17px; 
+      font-size: 17px;
     }
     .rp-last {
       margin-bottom: 15px;
@@ -176,5 +181,6 @@ page-modal {
     .rp-close-pop button.activated{
         transform: scale(.94);
     }
-  
+
+
       }
