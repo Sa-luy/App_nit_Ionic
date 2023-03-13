@@ -16,6 +16,12 @@
     "cordova-plugin-file-transfer": {
       "ANDROIDX_WEBKIT_VERSION": "1.4.0",
       "PACKAGE_NAME": "com.goosef.nit"
+    },
+    "cordova-plugin-nativestorage": {
+      "PACKAGE_NAME": "com.goosef.nit"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.goosef.nit"
     }
   },
   "dependent_plugins": {

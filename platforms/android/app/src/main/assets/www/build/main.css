@@ -25813,8 +25813,140 @@ login .cancle {
   z-index: 10000;
 }
 
-login .modal-login {
-  background-color: #ff7110;
+login .text-danger {
+  color: red;
+}
+
+login .pdl-9 {
+  padding-left: 90px;
+}
+
+register-user {
+  display: block;
+  width: 100%;
+  height: 333px;
+  position: relative;
+}
+
+register-user img.rp-bg_image {
+  position: absolute;
+  width: 312px;
+  background: transparent;
+  z-index: 0;
+  pointer-events: none;
+}
+
+register-user .nit_setting {
+  width: 279px;
+  height: 333px;
+  padding-top: 169px;
+  margin-left: 20px;
+}
+
+register-user .rp-as-range {
+  width: 45px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 45px;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+register-user .rp-as-range .rp-as-text ion-item {
+  padding-left: 0px;
+}
+
+register-user .rp-as-range .rp-as-text ion-item input {
+  border-bottom: 1px solid;
+}
+
+register-user .rp-as-range .rp-as-text ion-item ion-label {
+  font-weight: bold;
+}
+
+register-user .nit_setting ion-item {
+  background-color: transparent;
+  margin-top: -7px;
+}
+
+register-user .nit_setting ion-item.item-block div.item-inner {
+  border: 0;
+  padding-right: 5px;
+}
+
+register-user .nit_setting ion-row {
+  height: 42px;
+}
+
+register-user .nit_setting ion-row ion-col {
+  height: 50px;
+}
+
+register-user .nit_setting .range-ios .range-knob {
+  width: 22px;
+  height: 22px;
+}
+
+register-user .nit_setting_title {
+  position: absolute;
+  right: 50px;
+  top: 108px;
+  font-size: 26px;
+  color: white;
+  font-family: sans-serif;
+  font-weight: bolder;
+  text-shadow: -1px 2px #ff7110;
+}
+
+register-user .login {
+  position: relative;
+  left: 170px;
+  top: 20px;
+  border-radius: 50%;
+  background-image: url(../assets/imgs/ok-2.png);
+  background-size: 60px 60px;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 60px;
+  height: 60px;
+  z-index: 10000;
+}
+
+register-user .nologin {
+  position: relative;
+  left: 170px;
+  top: 20px;
+  border-radius: 50%;
+  background: transparent;
+  background-size: 60px 60px;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 60px;
+  height: 60px;
+  z-index: 10000;
+}
+
+register-user .cancle {
+  position: relative;
+  left: 30px;
+  bottom: 45px;
+  border-radius: 50%;
+  background-image: url(../assets/imgs/cancle.png);
+  background-size: 60px 60px;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 60px;
+  height: 60px;
+  z-index: 10000;
+}
+
+register-user .checkbox_icon {
+  position: relative;
+  top: 20px;
 }
 
 setting {
@@ -25922,6 +26054,20 @@ page-home .btn-login {
   border: 1px solid #2ea7db;
 }
 
+page-home .btn-register {
+  color: white;
+  position: absolute;
+  width: 13rem;
+  height: 6rem;
+  top: 90px;
+  background-color: #f9a737;
+  font-size: 2em;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  border-radius: 10px;
+  border: 1px solid #2ea7db;
+}
+
 page-home .nit_main_img {
   position: relative;
   display: block;
@@ -26003,6 +26149,13 @@ page-home .slider_arrow {
   page-home .swiper-slide {
     width: 100% !important;
   }
+}
+
+page-home .name_title {
+  position: relative;
+  top: -16.5rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
 }
 
 page-modal {
@@ -26292,4 +26445,12 @@ page-upload .slider_arrow {
   page-upload .swiper-slide {
     width: 100% !important;
   }
+}
+
+page-upload .text-danger {
+  color: red;
+}
+
+page-upload .pdl-9 {
+  padding-left: 90px;
 }

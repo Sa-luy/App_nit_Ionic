@@ -4,13 +4,13 @@
 <div class="nit_setting_title"><span>REGISTER</span></div>
 <div class="nit_setting">
   <ion-grid>
-    <form>
+    <form [formGroup]="RegisterForm">
     <ion-row>
         <ion-col class="rp-as-range">
             <div class="rp-as-text">
               <ion-item fill="solid">
                 <ion-label position="floating">User Name : </ion-label>
-                <ion-input placeholder="Enter username"  name="name" [(ngModel)]="name"></ion-input>
+                <ion-input placeholder="Enter username"  name="name" formControlName="name"></ion-input>
               </ion-item>
             </div>
         </ion-col>
@@ -20,14 +20,14 @@
             <div class="rp-as-text">
               <ion-item fill="solid">
                 <ion-label position="floating">Password : </ion-label>
-                <ion-input  type= 'password' placeholder="Enter password" [(ngModel)]="password" name="password"></ion-input>
+                <ion-input  type= 'password' placeholder="Enter password" formControlName="password" name="password"></ion-input>
               </ion-item>
             </div>
         </ion-col>
     </ion-row>
     <ion-row class="checkbox_icon">
       <ion-item>
-        <ion-checkbox slot="start" [(ngModel)]="checkbox" name="checkbox" (ionChange)="handleChange()"></ion-checkbox>
+        <ion-checkbox slot="start" formControlName="checkbox" [(ngModel)]="checkbox" name="checkbox" (ionChange)="handleChange()"></ion-checkbox>
         <ion-label>I agree to the terms and conditions</ion-label>
       </ion-item>
     </ion-row>
@@ -35,7 +35,7 @@
       </form>
       <button ion-button *ngIf="this.checkbox"  (click)="handleRegisterUser()" class="login"></button>
       <button ion-button *ngIf="!this.checkbox"   class="nologin"></button>
-      <button ion-button (click)="closeModalLogin()" class="cancle"></button>
+      <button ion-button (click)="closeModalRegister()" class="cancle"></button>
       </ion-grid>
 
 </div>

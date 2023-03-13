@@ -12,7 +12,6 @@ export class GlobalVars {
       public events: Events,
       public nativeAudio: NativeAudio,
       private nativeStorage: NativeStorage) {
-        //console.log("construct GLobalVars")
 
     }
     public global_factories: any;
@@ -23,7 +22,6 @@ export class GlobalVars {
 
 
     public openModalByComponentName(comName: string, params: string[] = [""], isSecondPop = false) {
-console.log(comName);
 
       let myModalOption: ModalOptions = {
         enableBackdropDismiss: false,

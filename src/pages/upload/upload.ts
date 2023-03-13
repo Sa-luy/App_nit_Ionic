@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 // import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { AlertController, IonicPage, ModalController, NavController, NavParams, Slides, ViewController } from 'ionic-angular';
+import { MyService } from '../../providers/service/my_service';
 import { HomePage } from '../home/home';
 
 @IonicPage()
@@ -14,26 +15,39 @@ import { HomePage } from '../home/home';
 export class UploadPage implements OnInit {
 
   @ViewChild('slideWithNav') slideWithNav: Slides;
-  link:string ;
-  banner: string;
+
   selectedFile:File=null;
   public homePage: HomePage
   sliderOne: any;
   userBanner:any  ;
+  id:any;
   uploadForm: FormGroup;
 
 
 
 
-  constructor(public navCtrl: NavController,public navParams: NavParams, private formBuilder: FormBuilder,
-    private http: HttpClient)
-   { this.sliderOne ={isBeginningSlide: true, isEndSlide: false,};
+  constructor(
+    public navCtrl: NavController,
+    public viewCtrl: ViewController,
+    public navParams: NavParams,
+    private service: MyService,
 
-  }
+     private formBuilder: FormBuilder,
+    private http: HttpClient,
+    public alertCtrl: AlertController
+    ){
+      // console.log(this.homePage.user_id); undefined
+      // this.id = this.homePage.user_id;
+      this.id =1;
+
+       this.sliderOne ={isBeginningSlide: true, isEndSlide: false,};
+
+     }
   ngOnInit() {
     this.uploadForm = this.formBuilder.group({
       url_image: ['', Validators.required],
-      link: ['', Validators.required]
+      link: ['', Validators.required],
+      user_id: ['']
     });
 
   }
@@ -44,37 +58,48 @@ export class UploadPage implements OnInit {
     this.userBanner=this.homePage.sliderOne.slidesItems;
   }
 
+  // onFileSelected(event) {
+  //   this.selectedFile = <File>event.target.files[0];
+  //   console.log(this.selectedFile);
+//}
   onFileSelected(event) {
     this.selectedFile = <File>event.target.files[0];
-
-
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.src = reader.result as string;
+      img.onload = () => {
+        if (img.naturalWidth === 0) {
+          console.log("This is not an image.");
+        } else {
+          console.log("This is an image.");
+        }
+      };
+    };
+    reader.readAsDataURL(this.selectedFile);
   }
   handleSubmit(){
-
-
-    const url = 'https://nitgame/banner';
     const formData = new FormData();
-    formData.append('link', this.link);
-    formData.append('url_image', this.selectedFile);
-    console.log(formData);
+    formData.append('link', this.uploadForm.value.link);
+    formData.append('user_id', this.uploadForm.value.user_id);
+    formData.append('url_image', this.selectedFile, this.selectedFile.name);
 
-    this.http.post(url, formData).subscribe(response => {
-      console.log('Banner created successfully');
-    }, error => {
-      console.error('Error creating banner', error);
-    });
-
-
-
-
-}
-
-
-
-  addBanner(data:any){
-    this.userBanner =[...this.userBanner,data];
-    const addSlide = this.navParams.get('addSlide');
-    addSlide(data);
-    this.navCtrl.pop();
+    this.service.addBanner(formData).subscribe()
+      let alert = this.alertCtrl.create({
+        title: 'Thành công',
+        message: 'Ảnh đã được tải lên thành công!',
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            // Đóng trang hiện tại trở lại trang chủ và tải lại trang chủ
+            this.navCtrl.setRoot(HomePage);
+          }
+        }]
+      });
+      setTimeout(() => {
+        alert.present();
+      },500)
+    this.viewCtrl.dismiss({ uploaded: true });
   }
+
 }

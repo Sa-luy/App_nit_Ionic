@@ -11,26 +11,28 @@
 </ion-header>
 
 <ion-content padding>
-  <form (ngSubmit)="handleSubmit()"
+  <form
    method="post"
    [formGroup]="uploadForm"
   enctype="multipart/form-data"
   >
     <ion-item>
       <ion-label>Link</ion-label>
-      <ion-input type="text" name="link"   [(ngModel)]="link" placeholder="link game" formControlName="link"></ion-input>
-      <!-- <div *ngIf="loginForm.controls.link.touched && loginForm.controls.link.errors">
-        <p *ngIf="loginForm.controls.link.errors.required">Name is required.</p>
-      </div>-->
+      <ion-input type="text" name="link"    placeholder="link game" formControlName="link"></ion-input>
+
     </ion-item>
+    <ion-text color="danger" *ngIf="uploadForm.get('link').invalid && uploadForm.get('link').touched">
+      <ion-icon name="alert-circle"></ion-icon>
+      <span *ngIf="uploadForm.get('link').errors.required" class="text-danger pdl-9">Email is required.</span>
+    </ion-text>
     <ion-item>
       <ion-label>Image</ion-label>
-      <ion-input type="file"  name="url_image" (change)="onFileSelected($event)" ></ion-input>
-      <!-- <ion-textarea [(ngModel)]="" name="description"></ion-textarea> -->
+      <ion-input type="file"  name="url_image" (change)="onFileSelected($event)" formControlName="url_image" ></ion-input>
+      <ion-input type="hidden" value="1" formControlName="user_id" name="user_id"></ion-input>
     </ion-item>
     <div class="btn-submit">
 
-      <button ion-button type="submit" block  >Add</button>
+      <button ion-button type="submit" block  (click)="handleSubmit()" [disabled]="uploadForm.invalid" >Add</button>
     </div>
   </form>
   <!-- slide -->

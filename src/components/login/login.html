@@ -3,14 +3,19 @@
 <div class="nit_setting_title"><span>LOGIN</span></div>
 <div class="nit_setting">
   <ion-grid>
-    <form>
+    <form [formGroup]="loginForm" >
     <ion-row>
         <ion-col class="rp-as-range">
             <div class="rp-as-text">
               <ion-item fill="solid">
                 <ion-label position="floating">User Name : </ion-label>
-                <ion-input placeholder="Enter username" [(ngModel)]="name" name="name"></ion-input>
+                <!-- <ion-input placeholder="Enter username" formControlName="name" ></ion-input> -->
+                <ion-input type="text" formControlName="name" placeholder="Enter name"></ion-input>
               </ion-item>
+              <ion-text color="danger" *ngIf="loginForm.get('name').invalid && loginForm.get('name').touched">
+                <ion-icon name="alert-circle"></ion-icon>
+                <span *ngIf="loginForm.get('name').errors.required" class="text-danger pdl-9">Email is required.</span>
+              </ion-text>
             </div>
         </ion-col>
     </ion-row>
@@ -18,14 +23,20 @@
         <ion-col class="rp-as-range">
             <div class="rp-as-text">
               <ion-item fill="solid">
-                <ion-label position="floating">Password : </ion-label>
-                <ion-input type= 'password' placeholder="Enter password" [(ngModel)]="password" name="password"></ion-input>
+                <ion-label  position="floating">Password : </ion-label>
+                <!-- <ion-input type="password" formControlName="password"></ion-input> -->
+                <ion-input type="password" formControlName="password" placeholder="Enter password"></ion-input>
               </ion-item>
+              <ion-text color="danger" *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">
+                <ion-icon name="alert-circle"></ion-icon>
+                <span *ngIf="loginForm.get('password').errors.required" class="text-danger pdl-9">Password is required.</span>
+                <span *ngIf="loginForm.get('password').errors.minlength" class="text-danger pdl-9">Password must be at least 6 characters long.</span>
+              </ion-text>
             </div>
         </ion-col>
     </ion-row>
 
       </form>
-      <button ion-button (click)="handleLogin()" class="login"></button>
+      <button type="submit" [disabled]="loginForm.invalid" (click)="onSubmit()" class="login"></button>
       <button ion-button (click)="closeModalLogin()" class="cancle"></button>
       </ion-grid>

@@ -25813,6 +25813,14 @@ login .cancle {
   z-index: 10000;
 }
 
+login .text-danger {
+  color: red;
+}
+
+login .pdl-9 {
+  padding-left: 90px;
+}
+
 register-user {
   display: block;
   width: 100%;
@@ -26143,6 +26151,13 @@ page-home .slider_arrow {
   }
 }
 
+page-home .name_title {
+  position: relative;
+  top: -16.5rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+}
+
 page-modal {
   border-radius: 8px;
   overflow: hidden;
@@ -26430,4 +26445,12 @@ page-upload .slider_arrow {
   page-upload .swiper-slide {
     width: 100% !important;
   }
+}
+
+page-upload .text-danger {
+  color: red;
+}
+
+page-upload .pdl-9 {
+  padding-left: 90px;
 }

@@ -1,4 +1,4 @@
-import { ErrorHandler, Injector, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, ErrorHandler, Injector, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NativeAudio } from '@awesome-cordova-plugins/native-audio/ngx';
@@ -20,8 +20,56 @@ import { HomePage } from '../pages/home/home';
 import { ModalPage } from '../pages/modal/modal';
 import { MyApp } from './app.component';
 import { GlobalVars } from './global';
+import { MyService } from '../providers/service/my_service';
 
 
+// @NgModule({
+//   declarations: [
+//     MyApp,
+//     UploadPage,
+//     HomePage,
+//     SettingComponent,
+//     LoginComponent,
+//     RegisterUserComponent,
+//     ModalPage
+//   ],
+//   imports: [
+//     BrowserModule,
+//     FormsModule,
+//     HttpClientModule,
+//     IonicModule ,
+//     ReactiveFormsModule,
+//     IonicModule.forRoot(MyApp, {
+//       mode: 'ios',
+//       scrollPadding: false,
+//       scrollAssist: false,
+//       autoFocusAssist: false
+//     })
+//   ],
+//   bootstrap: [IonicApp],
+//   entryComponents: [
+//     HomePage,
+//     MyApp,
+//     SettingComponent,
+//     LoginComponent,
+//     RegisterUserComponent,
+//     UploadPage,
+//     ModalPage,
+//   ],
+//   providers: [
+//     StatusBar,
+//     SplashScreen,
+//     Camera,
+//     GlobalVars,
+//     InAppBrowser,
+//     NativeAudio,
+//     HomePage,
+//     SmartAudio,
+//     NativeStorage,
+
+//     {provide: ErrorHandler, useClass: IonicErrorHandler}
+//   ]
+// })
 @NgModule({
   declarations: [
     MyApp,
@@ -42,8 +90,10 @@ import { GlobalVars } from './global';
       scrollPadding: false,
       scrollAssist: false,
       autoFocusAssist: false
-    })
+    }),
+    IonicModule // Add this line to import the IonicModule
   ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   bootstrap: [IonicApp],
   entryComponents: [
     HomePage,
@@ -64,7 +114,8 @@ import { GlobalVars } from './global';
     HomePage,
     SmartAudio,
     NativeStorage,
-    
+    MyService,
+
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

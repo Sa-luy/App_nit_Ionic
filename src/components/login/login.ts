@@ -1,7 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController, ViewController } from 'ionic-angular';
 import { AppInjector } from '../../app/app-injecter';
 import { GlobalVars } from '../../app/global';
+import { authService } from '../../providers/service/auth.service';
+import { MyService } from '../../providers/service/my_service';
 
 /**
  * Generated class for the LoginComponent component.
@@ -16,36 +20,46 @@ import { GlobalVars } from '../../app/global';
 export class LoginComponent {
 
   @Output() isLogin = new EventEmitter<boolean>();
-  name: string;
-  password: string;
+
   public myGlobal = AppInjector.get(GlobalVars);
+  loginForm: FormGroup;
 
 
   constructor(public viewCtrl: ViewController,
     public navCtrl: NavController,
+     private http: HttpClient,
+     private authService: authService,
+
+
     ) {
-    console.log('open Login Component Component');
 
+      };
+
+
+  ngOnInit() {
+
+
+    this.loginForm = new FormGroup({
+      name: new FormControl('', [Validators.required, ]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)])
+    });
   }
-  handleLogin() {
 
-    let data_user:object = {
-      name: this.name,
-      password: this.password
-    };
-    this.login(data_user)
+  onSubmit() {
 
+    if (this.loginForm.valid) {
+      const name = this.loginForm.value.name;
+      const password = this.loginForm.value.password;
+      this.authService.login(name, password).subscribe(data =>console.log(data)
+      )
 
-
-
-    this.viewCtrl.dismiss()
+      // service call login and change is login
+      // this.authService.login(email, password);
+      let checkLogin:boolean = true;
+      checkLogin? this.myGlobal.setLogin(true):this.myGlobal.setLogin(false)
+    }
   }
-  login(data:object) {
-    //call api handle login
-    let checkLogin:boolean = true;
-    checkLogin? this.myGlobal.setLogin(true):this.myGlobal.setLogin(false)
 
-  }
   closeModalLogin(){
   setTimeout(() => {
     this.navCtrl.pop();

@@ -8,22 +8,25 @@ import { GlobalVars } from '../../app/global';
 import { UploadPage } from '../upload/upload';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { MyService } from '../../providers/service/my_service';
+import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
 
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
+
 export class HomePage {
   public myGlobal = AppInjector.get(GlobalVars);
-
-
   @ViewChild('slideWithNav') slideWithNav: Slides;
+  user_name:string;
+  user_id:any = 1;
   sliderOne: any;
   sliders:any=[
     {
-      link:'https://ttlm.vnggames.com/index.html',
-      url_image:"https://www.techsignin.com/wp-content/uploads/2016/05/vo-lam-truyen-ky-vinagame-vng.jpg"
+      link:'',
+      url_image:""
     },
 
   ];
@@ -40,11 +43,16 @@ export class HomePage {
       public navParams: NavParams,
       private iab: InAppBrowser,
       private formBuilder: FormBuilder,
-      private http: HttpClient
+      private http: HttpClient,
+      private service: MyService,
+      public NativeStorage: NativeStorage,
 
       ) {
-    let uploadPage = new UploadPage(this.navCtrl, this.navParams,this.formBuilder,this.http);
+        getUserInfo()
 
+    this.service.getBanner(this.user_id).subscribe(data => {
+      this.sliders =data;
+    });
     this.sliderOne =
     {
       isBeginningSlide: true,
@@ -53,6 +61,14 @@ export class HomePage {
     };
 
   }
+
+
+  getSlider(){
+    this.service.getBanner(this.user_id).subscribe(data => {
+      this.sliders =data;
+    });
+  }
+
   addSlide(item: any) {
     this.sliders.push(item);
   }
@@ -107,7 +123,6 @@ export class HomePage {
   openModalLogin(){
     this.myGlobal.openModalByComponentName('LoginComponent')
 
-    console.log('Open modal ');
 
   }
   openModalRegister(){
@@ -125,13 +140,32 @@ export class HomePage {
 
   }
   ionViewWillEnter() {
-    this.slideWithNav.update();
+
+    this.getSlider()
+
+
+    // this.slideWithNav.update();
   }
+
 
   ngAfterViewInit() {
     // this.slideWithNav.Slides = 2000;
     this.slideWithNav.isBeginning
     // this.slides.autoplayDisableOnInteraction = false;
 }
+
+}
+async function getUserInfo() {
+
+
+  //   let user = await this.NativeStorage.getItem('user_info')
+  //   .then(data => console.log(data))
+  // .catch(error => console.log(error));
+
+    // this.user_id = user.user_id?user.user_id:1;
+    // console.log('homepage');
+    // console.log(user);
+
+    // this.user_name = user.name?user.name:'Nit';
 
 }

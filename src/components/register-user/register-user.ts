@@ -1,7 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ViewController } from 'ionic-angular';
 import { ApiResponse } from '../../interface';
+import{ environment } from '../../../environments/environment';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
+
+import { HomePage } from '../../pages/home/home';
 
 /**
  * Generated class for the RegisterUserComponent component.
@@ -14,27 +19,51 @@ import { ApiResponse } from '../../interface';
   templateUrl: 'register-user.html'
 })
 export class RegisterUserComponent {
-  name:string;
-  password:string;
+  RegisterForm: FormGroup;
+  public homePage: HomePage;
   checkbox:boolean = false;
 
 
   constructor(
+    public viewCtrl:ViewController,
     public navCtrl: NavController,
-    private http: HttpClient
+    public NativeStorage: NativeStorage,
+
+    private http: HttpClient,
+
 
     ) {
-    console.log('Hello RegisterUserComponent Component');
+      this.RegisterForm = new FormGroup({
+        name: new FormControl('', [Validators.required, ]),
+        password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+        checkbox: new FormControl('', [Validators.required])
+      });
 
   }
   handleRegisterUser(){
-    const data = { name: this.name, password: this.password };
-    const url = "https://630d63c4b37c364eb7036ff7.mockapi.io/users"
-    this.http.post<ApiResponse>(url, data)
+    const data = { name: this.RegisterForm.value.name, password: this.RegisterForm.value.password };
+    console.log(environment.urlRegister);
+
+
+
+    this.http.post<ApiResponse>(environment.urlRegister, data)
     .subscribe(response => {
       console.log('API response:', response.status);
       if (response.status === 200) {
-        console.log('Success!');
+
+        //luu trư  phien token vào thiet bị
+        this.NativeStorage.setItem('user_info', {api_token: response.token,
+                                                  user_id: response.user_id,
+                                                  name: response.name,
+                                                })
+  .then(() => console.log('Stored item!'))
+  .catch(error => console.error('Error storing item', error));
+
+
+
+        //call api banners
+
+        // set this.slides
       } else {
         console.log('Error:', response.status);
       }
@@ -42,19 +71,15 @@ export class RegisterUserComponent {
     setTimeout(() => {
       this.navCtrl.pop();
     }, 300);
-
-
-
   }
 
-  closeModalLogin(){
-    setTimeout(() => {
-      this.navCtrl.pop();
-    }, 300);
-  }
+
   handleChange() {
     console.log(this.checkbox);
 
+  }
+  closeModalRegister(){
+    this.navCtrl.pop()
   }
 
 }

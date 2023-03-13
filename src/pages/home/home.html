@@ -4,9 +4,10 @@
   <img class="nit_main_img" src="./././assets/imgs/nit_main_img.png" alt="">
   <button class="btn-login" (click)="openModalLogin()">Login</button>
   <button class="btn-register" (click)="openModalRegister()">Register</button>
-
   <div class="nit_button_section">
     <a  class="nit_button" (click)="this.openSeting()">test modal</a>
+  <h5 class="name_title">{{ user_name }}a</h5>
+
     <button ion-button class="btn_add_game" *ngIf="this.myGlobal.isLogin" (click)="this.openUpload()"><ion-icon name="add-circle-outline"></ion-icon></button>
     <ion-grid>
       <ion-row>
@@ -18,9 +19,9 @@
         <ion-col size="10">
 
           <ion-slides pager="false"   #slideWithNav (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">
-            <ion-slide *ngFor="let s of sliderOne.slidesItems">
+            <ion-slide *ngFor="let s of sliders">
               <a  href="#" (click)="this.openLink(s.link)">
-                <img src="{{ s.url_image }}">
+                <img src="http://127.0.0.1:8000/{{ s.url_image }}">
               </a>
             </ion-slide>
 
